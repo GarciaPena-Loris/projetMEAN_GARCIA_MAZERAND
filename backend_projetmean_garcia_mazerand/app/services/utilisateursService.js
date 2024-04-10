@@ -20,6 +20,10 @@ class UtilisateurService {
         return await utilisateurRepository.deleteUtilisateur(utilisateurId);
     }
 
+    async getUtilisateurByEmail(email) {
+        return await utilisateurRepository.getUtilisateurByEmail(email);
+    }
+
 }
 
 module.exports = new UtilisateurService();
