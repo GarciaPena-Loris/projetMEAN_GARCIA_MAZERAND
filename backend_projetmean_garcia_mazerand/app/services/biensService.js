@@ -1,4 +1,5 @@
 const biensRepository = require('../repositories/biensRepository');
+const locationsService = require('./locationsService');
 const imagesConfig = require('../../config/imagesConfig');
 const mailConfig = require('../../config/mailConfig');
 const {fakerFR: faker} = require('@faker-js/faker');
@@ -28,6 +29,7 @@ class BiensService {
         return await biensRepository.deleteBien(bienId);
     }
 
+    //region Création de biens aléatoires
     async createMultipleBiensAleatoire(nombreBiens) {
         let mailProprio;
         let listeBiens = [];
@@ -309,6 +311,28 @@ class BiensService {
 
         return parseFloat(prixAleatoire.toFixed(1)); // Arrondir à une décimale et retourner le prix
     }
+
+    //endregion
+
+    //region Recherche de biens
+    async getBiensByCriteria(criteria) {
+        // Convertir les dates en nombres pour la comparaison
+        let dateDebutNumber, dateFinNumber;
+        if (criteria.dateDebut)
+            dateDebutNumber = parseInt(criteria.dateDebut.replace(/-/g, ''));
+        if (criteria.dateFin)
+            dateFinNumber = parseInt(criteria.dateFin.replace(/-/g, ''));
+
+        // Récupérer les locations pour la période donnée
+        const locations = await locationsService.getLocationsByDate(dateDebutNumber, dateFinNumber);
+
+        // Récupérer les id des biens déjà loués
+        const biensLouesIds = locations.map(location => location.idBien);
+
+        // Récupérer les biens qui correspondent aux critères et qui ne sont pas déjà loués
+        return await biensRepository.getBiensByCriteria(criteria, biensLouesIds);
+    }
+    //endregion
 
 }
 

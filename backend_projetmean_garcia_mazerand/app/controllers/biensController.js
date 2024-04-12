@@ -36,5 +36,10 @@ class BiensController {
         console.info('Controller: createMultipleBien', nombreBien);
         return await biensService.createMultipleBiensAleatoire(nombreBien);
     }
+
+    async getBiensByCriteria(criteria) {
+        console.info('Controller: getBiensByCriteria', criteria);
+        return await biensService.getBiensByCriteria(criteria);
+    }
 }
 module.exports = new BiensController();

@@ -33,7 +33,7 @@ class BiensRepository {
         return data;
     }
 
-    async updateBien(bien) {
+    async updateBien(bien) {_è-('"(rty ')
         let data = {};
         try {
             data = await Bien.updateOne(bien);
@@ -53,6 +53,27 @@ class BiensRepository {
             console.error('Error::' + err);
         }
         return {status: `${(data.deletedCount > 0)}`};
+    }
+
+    // recherche de bien
+
+    // biensRepository.js
+    async getBiensByCriteria(criteria, biensLouesIds) {
+        // Construire l'objet de critères de recherche
+        const searchCriteria = {};
+
+        // Ajouter chaque critère à l'objet de recherche s'il est fourni
+        if (criteria.commune) searchCriteria.commune = criteria.commune;
+        if (criteria.prixMax) searchCriteria.prix = { $lte: criteria.prixMax };
+        if (criteria.nbChambresMin) searchCriteria.nbChambres = { $gte: criteria.nbChambresMin };
+        if (criteria.nbCouchagesMin) searchCriteria.nbCouchages = { $gte: criteria.nbCouchagesMin };
+        if (criteria.distanceMax) searchCriteria.distance = { $lte: criteria.distanceMax };
+
+        // Exclure les biens déjà loués
+        searchCriteria.idBien = { $nin: biensLouesIds };
+
+        // Effectuer la recherche avec les critères fournis
+        return Bien.find(searchCriteria);
     }
 
 }

@@ -69,6 +69,11 @@ app.post('/api/creerMultipleBienAleatoire', (req, res) => {
     biensController.createMultipleBienAleatoire(req.body.nombreBien).then(data => res.json(data));
 });
 
+app.post('/api/biens/search', (req, res) => {
+    const { criteria } = req.body;
+    biensController.getBiensByCriteria(criteria).then(data => res.json(data));
+});
+
 
 // Routes pour les locations
 app.get('/api/locations', (req, res) => {

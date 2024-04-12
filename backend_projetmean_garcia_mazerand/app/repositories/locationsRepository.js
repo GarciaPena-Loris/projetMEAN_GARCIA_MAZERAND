@@ -1,5 +1,5 @@
-const { connect, disconnect } = require('../../config/db.config');
-const { Location } = require('../models/locationsModel');
+const {connect, disconnect} = require('../../config/db.config');
+const {Location} = require('../models/locationsModel');
 
 class LocationsRepository {
 
@@ -18,7 +18,7 @@ class LocationsRepository {
         try {
             data = await Location.create(location);
             console.info('Location créé avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return data;
@@ -29,7 +29,7 @@ class LocationsRepository {
         try {
             data = await Location.updateOne(location);
             console.info('Location mis à jour avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return data;
@@ -38,12 +38,33 @@ class LocationsRepository {
     async deleteLocation(locationId) {
         let data = {};
         try {
-            data = await Location.deleteOne({_id : locationId});
+            data = await Location.deleteOne({_id: locationId});
             console.info('Location supprimé avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return {status: `${(data.deletedCount > 0)}`};
+    }
+
+    // Recherche de location
+    async getLocationsByDate(dateDebut, dateFin) {
+        return Location.find({
+            dateDebut: {$lte: dateFin},
+            dateFin: {$gte: dateDebut}
+        });
+    }
+
+    // locationsRepository.js
+    async getLocationsByStartDate(dateDebut) {
+        return Location.find({
+            dateFin: {$gte: dateDebut}
+        });
+    }
+
+    async getLocationsByEndDate(dateFin) {
+        return Location.find({
+            dateDebut: {$lte: dateFin}
+        });
     }
 
 }
