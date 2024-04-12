@@ -37,6 +37,11 @@ class BiensController {
         return await biensService.createMultipleBiensAleatoire(nombreBien);
     }
 
+    async createMultipleBiensFromCityAleatoire(nombreBien, city) {
+        console.info('Controller: createMultipleBiensFromCityAleatoire', nombreBien, city);
+        return await biensService.createMultipleBiensFromCityAleatoire(nombreBien, city);
+    }
+
     async getBiensByCriteria(criteria) {
         console.info('Controller: getBiensByCriteria', criteria);
         return await biensService.getBiensByCriteria(criteria);

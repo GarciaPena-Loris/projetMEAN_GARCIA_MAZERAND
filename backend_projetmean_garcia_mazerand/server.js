@@ -69,6 +69,10 @@ app.post('/api/creerMultipleBienAleatoire', (req, res) => {
     biensController.createMultipleBienAleatoire(req.body.nombreBien).then(data => res.json(data));
 });
 
+app.post('/api/creerMultipleBiensFromCityAleatoire', (req, res) => {
+    biensController.createMultipleBiensFromCityAleatoire(req.body.nombreBien, req.body.city).then(data => res.json(data));
+});
+
 app.post('/api/biens/search', (req, res) => {
     const { criteria } = req.body;
     biensController.getBiensByCriteria(criteria).then(data => res.json(data));

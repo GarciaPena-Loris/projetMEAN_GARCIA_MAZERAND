@@ -3,6 +3,7 @@ const locationsService = require('./locationsService');
 const imagesConfig = require('../../config/imagesConfig');
 const mailConfig = require('../../config/mailConfig');
 const {fakerFR: faker} = require('@faker-js/faker');
+const axios = require('axios');
 
 class BiensService {
 
@@ -32,16 +33,67 @@ class BiensService {
     //region Création de biens aléatoires
     async createMultipleBiensAleatoire(nombreBiens) {
         let mailProprio;
-        let listeBiens = [];
+        let bien;
+        let nombreBienCrees = 0;
         for (let i = 0; i < nombreBiens; i++) {
             mailProprio = this.getRandomFromArray(mailConfig.mail);
-            listeBiens.push(await this.createBienAleatoire(mailProprio));
+            bien = await this.createBienAleatoire(mailProprio);
+            if (bien) {
+                nombreBienCrees++;
+            }
         }
-        return listeBiens;
+        return {nombreBiensCrees: nombreBienCrees};
+    }
+
+    async createMultipleBiensFromCityAleatoire(nombreBiens, city) {
+        let mailProprio;
+        let bien;
+        let nombreBienCrees = 0;
+        for (let i = 0; i < nombreBiens; i++) {
+            mailProprio = this.getRandomFromArray(mailConfig.mail);
+            bien = await this.createBienFromCityAleatoire(mailProprio, city);
+            if (bien) {
+                nombreBienCrees++;
+            }
+        }
+        return {nombreBiensCrees: nombreBienCrees};
     }
 
     async createBienAleatoire(mailProprio) {
-        const adresse = this.generateAdresses();
+        const adresse = await this.generateAdresses();
+        if (!adresse) {
+            console.error('Impossible de récupérer les informations de la ville');
+            return null;
+        }
+        const typeLogement = this.getRandomTypeLogement();
+        const nombreDeChambres = this.getRandomNbChambres(typeLogement);
+        const nombreDeCouchages = this.getRandomNbCouchages(typeLogement, nombreDeChambres);
+        const surface = this.getRandomSurface(typeLogement);
+        const images = this.getRandomImages(typeLogement);
+        const prix = this.getRandomPrix(nombreDeChambres, nombreDeCouchages, surface, typeLogement, adresse.distance, adresse.commune);
+        const bien = {
+            idBien: await this.getNextIdBien(),
+            mailProprio: mailProprio,
+            commune: adresse.commune,
+            rue: adresse.rue,
+            cp: adresse.cp,
+            latitude: adresse.latitude,
+            longitude: adresse.longitude,
+            nbCouchages: nombreDeCouchages,
+            nbChambres: nombreDeChambres,
+            distance: adresse.distance,
+            prix: prix,
+            surface: surface,
+            typeLogement: typeLogement,
+            description: this.getRandomDescription(nombreDeChambres, nombreDeCouchages, typeLogement, adresse.distance, adresse.commune, prix),
+            imagePrincipale: images.imagePrincipale,
+            images: images.images
+        };
+        return await biensRepository.createBien(bien);
+    }
+
+    async createBienFromCityAleatoire(mailProprio, city) {
+        const adresse = await this.generateAdressesFromCity(city);
         const typeLogement = this.getRandomTypeLogement();
         const nombreDeChambres = this.getRandomNbChambres(typeLogement);
         const nombreDeCouchages = this.getRandomNbCouchages(typeLogement, nombreDeChambres);
@@ -71,7 +123,6 @@ class BiensService {
 
     async getNextIdBien() {
         const lastBienId = await biensRepository.getLastBienId();
-        console.info('Dernier bien récupéré: ' + lastBienId);
         return lastBienId ? lastBienId + 1 : 1;
     }
 
@@ -133,14 +184,147 @@ class BiensService {
         return this.getRandomFromArray(typesLogement);
     }
 
-    generateAdresses() {
+    async generateAdresses() {
         const commune = faker.location.city();
         const rue = faker.location.streetAddress(true);
-        const cp = faker.location.zipCode();
-        const distance = Math.floor(Math.random() * 5000) + 50; // Distance aléatoire entre 50 et 1050 mètres
-        const latitude = faker.location.latitude({max: 49.2987535378984, min: 43.37560894095645, precision: 16});
-        const longitude = faker.location.longitude({max: 6.079860323227755, min: -1.14387274200352, precision: 16});
+        const adresse = await this.getRealInfoFromCity(commune);
+        if (!adresse) {
+            return;
+        }
+        const {cp, distance, latitude, longitude} = adresse;
         return {commune, rue, cp, distance, latitude, longitude};
+    }
+
+    generateAdressesFromCity(city) {
+        const commune = city;
+        const rue = faker.location.streetAddress(true);
+        const {cp, distance, latitude, longitude} = this.getInfoFromCity(city);
+        return {commune, rue, cp, distance, latitude, longitude};
+    }
+
+    distance(lat1, lon1, lat2, lon2) {
+        const R = 6371e3; // Rayon de la Terre en mètres
+        const phi1 = lat1 * Math.PI / 180; // Conversion de degrés en radians
+        const phi2 = lat2 * Math.PI / 180;
+        const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+        const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+        const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // Distance en mètre
+    }
+
+    getRealInfoFromCity(city) {
+        const apiKey = process.env.GOOGLE_MAPS_API_KEY; // Assurez-vous de stocker votre clé API dans une variable d'environnement
+        const requestUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(city)}&key=${apiKey}`;
+
+        return axios.get(requestUrl)
+            .then(response => {
+                if (response.data.status === 'OK') {
+                    const location = response.data.results[0].geometry.location;
+                    let cp = faker.location.zipCode();
+                    const addressComponents = response.data.results[0].address_components;
+                    for (let i = 0; i < addressComponents.length; i++) {
+                        if (addressComponents[i].long_name.match(/^\d{5}$/)) {
+                            cp = addressComponents[i].long_name;
+                            break;
+                        }
+                    }
+                    const diffLatitude = 0.045;
+                    const diffLongitude = 0.045;
+                    const latitude = faker.location.latitude({max: location.lat + diffLatitude, min: location.lat - diffLatitude, precision: 16});
+                    const longitude = faker.location.longitude({max: location.lng + diffLongitude, min: location.lng - diffLongitude, precision: 16});
+                    const distance = parseFloat(this.distance(location.lat, location.lng, latitude, longitude).toFixed(2));
+                    return {cp, distance, latitude, longitude};
+                } else {
+                    console.log(`Failed to get location from Google Maps API from city: ${city}: ${response.data.status}`);
+                    return null;
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                throw error;
+            });
+    }
+
+    getInfoFromCity(city) {
+        let cp, distance, latitude, longitude;
+        switch (city) {
+            case "Paris":
+                cp = "75000";
+                // Distance entre 0 et la taille de paris (105km)
+                distance = Math.floor(Math.random() * 105000) + 50;
+                latitude = faker.location.latitude({max: 48.95, min: 48.78, precision: 16});
+                longitude = faker.location.longitude({max: 2.5, min: 2.2, precision: 16});
+                break;
+            case "Marseille":
+                cp = "13000";
+                // Distance entre 0 et la taille de Marseille (50km)
+                distance = Math.floor(Math.random() * 50000) + 50;
+                latitude = faker.location.latitude({max: 43.33, min: 43.20, precision: 16});
+                longitude = faker.location.longitude({max: 5.44, min: 5.35, precision: 16});
+                break;
+            case "Lyon":
+                cp = "69000";
+                // Distance entre 0 et la taille de Lyon (30km)
+                distance = Math.floor(Math.random() * 30000) + 50;
+                latitude = faker.location.latitude({max: 45.83, min: 45.70, precision: 16});
+                longitude = faker.location.longitude({max: 4.93, min: 4.80, precision: 16});
+                break;
+            case "Toulouse":
+                cp = "31000";
+                // Distance entre 0 et la taille de Toulouse (20km)
+                distance = Math.floor(Math.random() * 20000) + 50;
+                latitude = faker.location.latitude({max: 43.65, min: 43.55, precision: 16});
+                longitude = faker.location.longitude({max: 1.50, min: 1.40, precision: 16});
+                break;
+            case "Nice":
+                cp = "06000";
+                // Distance entre 0 et la taille de Nice (15km)
+                distance = Math.floor(Math.random() * 15000) + 50;
+                latitude = faker.location.latitude({max: 43.75, min: 43.65, precision: 16});
+                longitude = faker.location.longitude({max: 7.30, min: 7.20, precision: 16});
+                break;
+            case "Nantes":
+                cp = "44000";
+                // Distance entre 0 et la taille de Nantes (20km)
+                distance = Math.floor(Math.random() * 20000) + 50;
+                latitude = faker.location.latitude({max: 47.25, min: 47.15, precision: 16});
+                longitude = faker.location.longitude({max: -1.50, min: -1.60, precision: 16});
+                break;
+            case "Montpellier":
+                cp = "34000";
+                // Distance entre 0 et la taille de Montpellier (15km)
+                distance = Math.floor(Math.random() * 15000) + 50;
+                latitude = faker.location.latitude({max: 43.65, min: 43.55, precision: 16});
+                longitude = faker.location.longitude({max: 3.90, min: 3.80, precision: 16});
+                break;
+            case "Strasbourg":
+                cp = "67000";
+                // Distance entre 0 et la taille de Strasbourg (15km)
+                distance = Math.floor(Math.random() * 15000) + 50;
+                latitude = faker.location.latitude({max: 48.63, min: 48.53, precision: 16});
+                longitude = faker.location.longitude({max: 7.80, min: 7.70, precision: 16});
+                break;
+            case "Bordeaux":
+                cp = "33000";
+                // Distance entre 0 et la taille de Bordeaux (20km)
+                distance = Math.floor(Math.random() * 20000) + 50;
+                latitude = faker.location.latitude({max: 44.90, min: 44.80, precision: 16});
+                longitude = faker.location.longitude({max: -0.55, min: -0.65, precision: 16});
+                break;
+            case "Lille":
+                cp = "59000";
+                // Distance entre 0 et la taille de Lille (10km)
+                distance = Math.floor(Math.random() * 10000) + 50;
+                latitude = faker.location.latitude({max: 50.70, min: 50.60, precision: 16});
+                longitude = faker.location.longitude({max: 3.10, min: 3.00, precision: 16});
+                break;
+        }
+        return {cp, distance, latitude, longitude};
     }
 
     getRandomSurface(typeLogement) {
@@ -259,16 +443,16 @@ class BiensService {
 
     getRandomPrix(nombreDeChambres, nombreDeCouchages, surface, typeLogement, distance, ville) {
         // Coefficients pour ajuster le prix en fonction des différents facteurs
-        const coefficientChambres = 5;
-        const coefficientCouchages = 3;
-        const coefficientSurface = 0.2;
+        const coefficientChambres = 8;
+        const coefficientCouchages = 5;
+        const coefficientSurface = 1.5;
 
         const coefficientTypeLogement = {
-            "appartement": 1.2,
-            "maison": 1.8,
+            "appartement": 1.5,
+            "maison": 2,
             "studio": 0.8
         };
-        const coefficientDistance = 0.005; // Prix augmenté de 0.001€ par mètre de distance
+        const coefficientDistance = 0.001; // Prix augmenté de 0.001€ par mètre de distance
         const coefficientVille = {
             "Paris": 2.5,
             "Marseille": 1.6,
@@ -285,13 +469,17 @@ class BiensService {
         // Calcul du prix de base en fonction du nombre de chambres et de couchages
         let prixBase = (nombreDeChambres * coefficientChambres) + (nombreDeCouchages * coefficientCouchages) + (surface * coefficientSurface);
 
+        // Ajustement du prix en fonction de la distance
+        const reductionDistance = distance * coefficientDistance
+        prixBase -= reductionDistance;
+        if (prixBase < 20) {
+            prixBase = 40;
+        }
+
         // Ajustement du prix en fonction du type de logement
         if (coefficientTypeLogement[typeLogement]) {
             prixBase *= coefficientTypeLogement[typeLogement];
         }
-
-        // Ajustement du prix en fonction de la distance
-        prixBase += distance * coefficientDistance;
 
         // Ajustement du prix en fonction de la ville
         let coefficientVilleSpecifique = coefficientVille[ville];

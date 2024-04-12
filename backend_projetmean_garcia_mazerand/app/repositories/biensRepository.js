@@ -16,7 +16,7 @@ class BiensRepository {
     async getLastBienId() {
         const bien = await Bien.find({}).sort({idBien: -1}).limit(1);
         if (bien.length === 0) {
-            return {idBien: 0};
+            return 0;
         }
         console.info('Dernier id : ' + bien[0].idBien);
         return bien[0].idBien;
