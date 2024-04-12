@@ -13,6 +13,12 @@ class UtilisateurRepository {
         return utilisateurs;
     }
 
+    async getUtilisateurByEmail(email) {
+        const utilisateur = await Utilisateur.findOne({email: email});
+        console.info('Utilisateur récupéré avec succès: ' + utilisateur);
+        return utilisateur;
+    }
+
     async createUtilisateur(utilisateur) {
         let data = {};
         try {

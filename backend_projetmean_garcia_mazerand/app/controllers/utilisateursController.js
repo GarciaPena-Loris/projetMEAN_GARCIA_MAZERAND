@@ -1,4 +1,5 @@
 const utilisateurService  = require('../services/utilisateursService');
+const bcrypt = require('bcrypt');
 
 class UtilisateurController {
 
@@ -20,6 +21,22 @@ class UtilisateurController {
     async deleteUtilisateur(utilisateurId) {
         console.info('Controller: deleteUtilisateur', utilisateurId);
         return await utilisateurService.deleteUtilisateur(utilisateurId);
+    }
+
+    async register(utilisateur) {
+        console.info('Controller: register', utilisateur);
+        // Hash the password
+        utilisateur.mdp = await bcrypt.hash(utilisateur.mdp, 10);
+        return await utilisateurService.createUtilisateur(utilisateur);
+    }
+
+    async login(email, password) {
+        console.info('Controller: login', email);
+        const utilisateur = await utilisateurService.getUtilisateurByEmail(email);
+        if (utilisateur && await bcrypt.compare(password, utilisateur.mdp)) {
+            return utilisateur; // Login successful
+        }
+        throw new Error('Invalid email or password');
     }
 }
 module.exports = new UtilisateurController();

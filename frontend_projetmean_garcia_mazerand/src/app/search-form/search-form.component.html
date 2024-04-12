@@ -1,0 +1,71 @@
+<div class="search-components">
+  <div class="search-table">
+    <table>
+      <tbody>
+      <tr>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto" >
+            <mat-label>Localisation</mat-label>
+            <input matInput placeholder="Localisation">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Nombre couchages</mat-label>
+            <input matInput placeholder="Nombres couchages">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Date Début</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Date Fin</mat-label>
+            <input matInput [matDatepicker]="picker2">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Prix max</mat-label>
+            <input matInput placeholder="Prix max">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Type de logement</mat-label>
+            <input matInput placeholder="Type de logement">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Nombre chambres</mat-label>
+            <input matInput placeholder="Nombres chambres">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline" class="mat-form-custom">
+            <mat-label>Distance centre</mat-label>
+            <input matInput placeholder="Distance centre">
+          </mat-form-field>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <button mat-stroked-button class="search-button">
+      Rechercher
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>

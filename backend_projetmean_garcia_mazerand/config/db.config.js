@@ -8,7 +8,7 @@ const connect = () => {
     mongoose.connect(url);
 
     mongoose.connection.once("open", async () => {
-        console.info("Connected to database");
+        console.info("Connected to database :", mongoose.connection.name);
     });
 
     mongoose.connection.on("error", (err) => {

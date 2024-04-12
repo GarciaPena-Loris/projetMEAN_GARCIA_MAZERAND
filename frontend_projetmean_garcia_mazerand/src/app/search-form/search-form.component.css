@@ -1,0 +1,42 @@
+.search-components {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-table {
+  padding-top: 2%;
+}
+
+.mat-form-custom {
+  width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+mat-dialog-actions {
+  margin-left: 20px;
+}
+
+
+
+.search-button{
+  height: 50px;
+  width: 200px;
+  font-size: 1.2em;
+  margin-left: 15px;
+}
+
+td {
+  padding-right: 8px;
+}
+.search-button:hover {
+  background-color: cadetblue;
+  color: #fff;
+}
+
+.mat-form-field.mat-focused .mat-form-field-outline-thick {
+  color: cadetblue; /* Remplacez #000000 par la couleur de votre choix */
+}
