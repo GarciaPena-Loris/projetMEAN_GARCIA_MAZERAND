@@ -1,0 +1,12 @@
+
+<div *ngFor="let logement of logementsALouer">
+  <h3>{{ logement.commune }}</h3>
+  <p>{{ logement.rue }}, {{ logement.cp }}</p>
+  <p>{{ logement.nbChambres }} chambre(s), {{ logement.nbCouchages }} couchage(s)</p>
+  <p>Distance au centre : {{ logement.distance }} mètres</p>
+  <p>Prix : {{ logement.prix }} euros</p>
+  <p>Surface : {{ logement.surface }} m²</p>
+  <p>Type de logement : {{ logement.typeLogement }}</p>
+  <p>Description : {{ logement.description }}</p>
+  <!-- Ajoutez d'autres détails du logement ici -->
+</div>
