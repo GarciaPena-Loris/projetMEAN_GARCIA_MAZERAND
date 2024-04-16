@@ -1,6 +1,9 @@
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Bien} from '../model/bien.interface';
+import { PageService } from './page.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,23 +13,20 @@ import { Observable } from 'rxjs';
   templateUrl: './page.component.html',
   styleUrl: './page.component.css'
 })
-export class PageComponent {
-  logementsALouer: any[] = [];
-  constructor(private http: HttpClient) { }
-  postData() {
-    // Effectuez la requête POST
-    this.http.post('http://localhost:4200', {}).subscribe((response: any) => {
-      console.log('Réponse du backend:', response);
-      this.logementsALouer = response as any[]; // Stockez les logements à louer dans la propriété
+export class PageComponent implements OnInit{
+  logementsALouer: Bien[] = [];
+  constructor(private pageService: PageService) { }
 
-      console.log('Logements à louer:', this.logementsALouer); // Afficher les données dans la console
+  private apiUrl = 'http://localhost:4200';
+
+  ngOnInit() {
+    this.pageService.getAllBiens().subscribe((biens: Bien[]) => {
+      this.logementsALouer = biens;
     }, (error: any) => {
       console.error('Erreur lors de la requête:', error);
-      // Traitez l'erreur ici
+
     });
   }
 
-  // getUsers(): Observable<Logement[]> {
-  //   return this.http.get<Logement[]>('http://localhost:4200/');
-  // }
+
 }
