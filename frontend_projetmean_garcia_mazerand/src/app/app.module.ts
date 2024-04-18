@@ -14,13 +14,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
+import { SelectorComponent } from './selector/selector.component';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     HeaderComponent,
-    PageComponent
+    PageComponent,
+    SelectorComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,9 @@ import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/ht
     MatButton,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabGroup,
+    MatTab
   ],
   providers: [
     provideClientHydration(),
