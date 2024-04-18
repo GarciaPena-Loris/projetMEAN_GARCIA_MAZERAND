@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const bodyParser = require('body-parser');
 
 require('dotenv').config()
@@ -11,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 3080;
 
 app.use(bodyParser.json());
+app.use(cors())
 
 // Routes pour les utilisateurs
 app.get('/api/utilisateurs', (req, res) => {
