@@ -6,7 +6,7 @@ import {Bien} from '../model/bien.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class PageService {
+export class HousingService {
   private apiUrl = 'http://localhost:3080/api';
 
   constructor(private http: HttpClient) {

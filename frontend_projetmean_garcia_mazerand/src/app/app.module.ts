@@ -9,23 +9,18 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import { HeaderComponent } from './header/header.component';
 import {MatButton} from "@angular/material/button";
-import { PageComponent } from './page/page.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
-import { SelectorComponent } from './selector/selector.component';
-import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import { MapComponent } from './map/map.component';
+import {HousingComponent} from "./housing/housing.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     HeaderComponent,
-    PageComponent,
-    SelectorComponent,
-    MapComponent
+    HousingComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +31,7 @@ import { MapComponent } from './map/map.component';
     MatButton,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule,
-    MatTabGroup,
-    MatTab
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(),
