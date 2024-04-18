@@ -11,17 +11,20 @@
 }
 
 .app-name {
-font-size: 3em;
+  font-size: 3em;
   font-weight: bold;
   color: cadetblue;
   margin-left: 20px;
-  margin-top: -50px;
+  display: flex;
+  align-items: center;
+
 }
 .login{
   width: 100px;
   margin-right: 4%;
-  margin-top: -50px;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .login-button  {
   margin-right: 10%;
