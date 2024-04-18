@@ -14,13 +14,18 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import { HousingComponent } from './housing/housing.component';
+import {MatCardModule} from "@angular/material/card";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { HousingCardComponent } from './housing-card/housing-card.component';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     HeaderComponent,
-    HousingComponent
+    HousingComponent,
+    HousingCardComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,10 @@ import { HousingComponent } from './housing/housing.component';
     MatButton,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    FlexLayoutModule,
+    FlexLayoutServerModule
   ],
   providers: [
     provideClientHydration(),

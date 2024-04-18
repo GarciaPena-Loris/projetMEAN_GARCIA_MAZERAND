@@ -1,0 +1,56 @@
+.cardList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+/* Column Gap */
+.cardList > * {
+  box-sizing: border-box;
+}
+.cardList > *:not(:last-child) {
+  margin-right: 32px;
+}
+/* Item sizing */
+.cardListItem {
+  flex: 0 1 calc(33.3% - 32px);
+}
+/* medium size viewport */
+@media screen and (max-width: 959px) {
+  /* Column Gap */
+  .cardList > *:not(:last-child) {
+    margin-right: 32px;
+  }
+  /* Item sizing */
+  .cardListItem {
+    flex: 0 1 calc(50% - 32px);
+  }
+}
+/* small size viewport */
+@media screen and (max-width: 599px) {
+  .cardList {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .cardList > *:not(:last-child) {
+    margin-right: unset;
+    margin-bottom: 32px;
+  }
+}
+
+
+:host {
+  display: block;
+  padding: 32px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+
+.housing-card img {
+  width: 100%; /* La largeur de l'image est égale à 100% de la largeur de son conteneur */
+  height: auto; /* La hauteur de l'image est ajustée automatiquement pour conserver le ratio d'aspect */
+  object-fit: cover; /* Ajuste la taille de l'image pour remplir le conteneur tout en conservant son ratio d'aspect */
+}
+

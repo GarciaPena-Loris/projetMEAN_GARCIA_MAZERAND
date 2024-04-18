@@ -1,0 +1,18 @@
+<mat-card class="housing-card">
+  <mat-card-header>
+    <mat-card-title>{{ logement?.commune }}</mat-card-title>
+    <mat-card-subtitle>{{ logement?.typeLogement }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="logement?.imagePrincipale + '.jpg'" alt="Image principale">
+  <mat-card-content>
+    <p>{{ logement?.description }}</p>
+    <p>{{ logement?.rue }}, {{ logement?.cp }}</p>
+    <p>{{ logement?.nbChambres }} chambre(s), {{ logement?.nbCouchages }} couchage(s)</p>
+    <p>Distance au centre : {{ logement?.distance }} mètres</p>
+    <p>Prix : {{ logement?.prix }} euros</p>
+    <p>Surface : {{ logement?.surface }} m²</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Plus de détails</button>
+  </mat-card-actions>
+</mat-card>

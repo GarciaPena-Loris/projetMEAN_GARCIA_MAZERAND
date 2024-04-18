@@ -27,5 +27,4 @@ export class HousingComponent implements OnInit{
     });
   }
 
-
 }
