@@ -17,8 +17,6 @@ export class PageComponent implements OnInit{
   logementsALouer: Bien[] = [];
   constructor(private pageService: PageService) { }
 
-  private apiUrl = 'http://localhost:4200';
-
   ngOnInit() {
     this.pageService.getAllBiens().subscribe((biens: Bien[]) => {
       this.logementsALouer = biens;

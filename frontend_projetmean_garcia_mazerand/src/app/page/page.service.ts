@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Bien } from '../model/bien.interface';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Bien} from '../model/bien.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PageService {
-  private apiUrl = 'http://localhost:4200'; // Remplacez par l'URL de votre API
+  private apiUrl = 'http://localhost:3080/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllBiens(): Observable<Bien[]> {
-    return this.http.get<Bien[]>(this.apiUrl);
+    const body = {"criteria": {"prixMax": 30}}
+    return this.http.post<Bien[]>(this.apiUrl + '/biens/search', body);
   }
 }
