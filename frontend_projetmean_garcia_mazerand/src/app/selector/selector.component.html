@@ -1,4 +1,10 @@
-<mat-tab-group>
-  <mat-tab label="First"> Logements </mat-tab>
-  <mat-tab label="Second"> Carte </mat-tab>
-</mat-tab-group>
+<div class="selector">
+  <mat-tab-group>
+    <mat-tab label="Logements">
+      <app-housing [logements]="logements"></app-housing>
+    </mat-tab>
+    <mat-tab label="Carte">
+      <app-map [logements]="logements"></app-map>
+    </mat-tab>
+  </mat-tab-group>
+</div>

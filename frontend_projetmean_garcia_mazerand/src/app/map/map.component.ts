@@ -1,37 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import * as L from 'leaflet';
+import {Component, OnInit, Input, ViewChild, SimpleChanges} from '@angular/core';
+import {Bien} from "../model/bien.interface";
+import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+  @Input() logements: any;
+  @ViewChild(MapInfoWindow, { static: false }) infoWindow?: MapInfoWindow;
 
-  map: any;
+  constructor() {
+  }
 
-  constructor() { }
+  ngOnInit() {
+  }
 
-  ngOnInit(): void {
-    // Initialisez la carte
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['logements'] && changes['logements'].currentValue) {
+      this.addMarkersToMap();
+    }
+  }
 
-    // Ajoutez une couche de tuiles OpenStreetMap à la carte
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(this.map);
-
-    // Ajoutez des marqueurs pour chaque offre de location (remplacez avec vos données)
-    const offresLocations = [
-      { latitude: 51.5, longitude: -0.09, titre: 'Offre 1' },
-      { latitude: 51.51, longitude: -0.1, titre: 'Offre 2' },
-      // Ajoutez d'autres offres de location ici
-    ];
-
-    offresLocations.forEach(offre => {
-      L.marker([offre.latitude, offre.longitude]).addTo(this.map)
-        .bindPopup(offre.titre); // Affichez le titre de l'offre lors du clic sur le marqueur
+  addMarkersToMap() {
+    this.logements?.forEach((logement: Bien) => {
+      this.addMarker(logement);
     });
   }
+
+  display: any;
+  center: google.maps.LatLngLiteral = {
+    lat: 46.56933106435086,
+    lng: 2.6653996434831795
+  };
+  zoom = 6;
+  infoContent: string = '';
+  markers: Set<google.maps.Marker> = new Set();
+
+  move(event: google.maps.MapMouseEvent) {
+    if (event.latLng != null) this.display = (event.latLng.toJSON())
+  }
+
+  loadMarker(logement: Bien): google.maps.Marker {
+    return new google.maps.Marker({
+      position: {
+        lat: logement.latitude ?? 0,
+        lng: logement.longitude ?? 0
+      },
+      title: logement.rue + ' ' + logement.commune,
+      animation: google.maps.Animation.DROP,
+      draggable: false,
+    });
+  }
+
+  addMarker(logement: Bien): void {
+    const marker = this.loadMarker(logement);
+    this.markers.add(marker);
+  }
+
+  openMapInfo(content: string, marker: MapMarker): void {
+    this.infoContent = content;
+    this.infoWindow?.open(marker);
+  }
+
 
 }

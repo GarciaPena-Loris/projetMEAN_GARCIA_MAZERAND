@@ -14,16 +14,23 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import {HousingComponent} from "./housing/housing.component";
+import {MapComponent} from "./map/map.component";
+import {SelectorComponent} from "./selector/selector.component";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     HeaderComponent,
-    HousingComponent
+    HousingComponent,
+    SelectorComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
+    GoogleMapsModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatIcon,
@@ -31,7 +38,9 @@ import {HousingComponent} from "./housing/housing.component";
     MatButton,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabGroup,
+    MatTab
   ],
   providers: [
     provideClientHydration(),
