@@ -1,0 +1,39 @@
+.container-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+
+}
+
+.sous-conteneur1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2%;
+}
+
+.sous-conteneur2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+
+.hr {
+  width: 60%;
+}
+
+.button-container {
+   display: flex;
+  gap: 2%;
+}
+
+.h3 {
+  width: 90%;
+  margin-left: 5%;
+}
