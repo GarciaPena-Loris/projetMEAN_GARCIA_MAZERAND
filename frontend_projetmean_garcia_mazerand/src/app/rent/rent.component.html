@@ -1,0 +1,41 @@
+<h2>Location de logement</h2>
+<form>
+  <mat-form-field>
+    <input matInput placeholder="Nom" [(ngModel)]="nom">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Prénom" [(ngModel)]="prenom">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Code" [(ngModel)]="code">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerExpiration" placeholder="Date d'expiration" [(ngModel)]="expiration">
+    <mat-datepicker-toggle matSuffix [for]="pickerArrivee"></mat-datepicker-toggle>
+    <mat-datepicker #pickerExpiration></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="CVV" [(ngModel)]="cvv">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerArrivee" placeholder="Date d'arrivée" [(ngModel)]="dateArrivee">
+    <mat-datepicker-toggle matSuffix [for]="pickerArrivee"></mat-datepicker-toggle>
+    <mat-datepicker #pickerArrivee></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerDepart" placeholder="Date de départ" [(ngModel)]="dateDepart">
+    <mat-datepicker-toggle matSuffix [for]="pickerDepart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerDepart></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Nombre de voyageurs" [(ngModel)]="nombreVoyageurs">
+  </mat-form-field>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="confirmerLocation()">Confirmer</button>
+    <button mat-raised-button color="warn" (click)="annulerLocation()">Annuler</button>
+  </div>
+</form>

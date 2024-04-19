@@ -13,7 +13,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
-import {HousingComponent} from "./housing/housing.component";
+import { HousingComponent } from './housing/housing.component';
+import {MatCardModule} from "@angular/material/card";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { HousingCardComponent } from './housing-card/housing-card.component';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { RentComponent } from './rent/rent.component';
+import {FormsModule} from "@angular/forms";
 import {MapComponent} from "./map/map.component";
 import {SelectorComponent} from "./selector/selector.component";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
@@ -25,6 +32,8 @@ import {GoogleMapsModule} from "@angular/google-maps";
     SearchFormComponent,
     HeaderComponent,
     HousingComponent,
+    HousingCardComponent,
+    RentComponent,
     SelectorComponent,
     MapComponent
   ],
@@ -38,6 +47,12 @@ import {GoogleMapsModule} from "@angular/google-maps";
     MatButton,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule,
+    MatCardModule,
+    FlexLayoutModule,
+    FlexLayoutServerModule,
+    MatPaginatorModule,
+    FormsModule,
     HttpClientModule,
     MatTabGroup,
     MatTab

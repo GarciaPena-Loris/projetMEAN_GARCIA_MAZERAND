@@ -1,0 +1,22 @@
+<mat-card class="housing-card" (click)="openRentDialog()">
+  <mat-card-header>
+    <mat-card-title>{{ logement && logement.commune }}</mat-card-title>
+    <mat-card-subtitle>{{ logement && logement.typeLogement }}</mat-card-subtitle>
+    <div class="price">{{ logement && logement.prix }} €</div>
+  </mat-card-header>
+  <div class="image-container">
+    <img mat-card-image [src]="logement && logement.imagePrincipale + '.jpg'" alt="Image principale" class="center-image">
+  </div>
+  <mat-card-content class="binks">
+    <p>{{ logement && logement.rue }}</p>
+    <p>{{ logement && logement.nbChambres }} chambre{{logement && logement.nbChambres>1 ? 's' : ''}}, {{ logement && logement.nbCouchages }} couchage{{logement && logement.nbCouchages>1 ? 's' : ''}}</p>
+    <div *ngIf="showDetails">
+      <p>{{ logement && logement.description }}</p>
+      <p>A {{ logement && logement.distance }} mètres du centre </p>
+      <p>Surface : {{ logement && logement.surface }} m²</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
+  </mat-card-actions>
+</mat-card>
