@@ -1,8 +1,8 @@
-<mat-card class="housing-card" (click)="openRentDialog()">
+<mat-card class="housing-card">
   <mat-card-header>
     <mat-card-title>{{ logement && logement.commune }}</mat-card-title>
     <mat-card-subtitle>{{ logement && logement.typeLogement }}</mat-card-subtitle>
-    <div class="price">{{ logement && logement.prix }} €</div>
+    <div class="price">{{ logement && logement.prix }}€/nuit</div>
   </mat-card-header>
   <div class="image-container">
     <img mat-card-image [src]="logement && logement.imagePrincipale + '.jpg'" alt="Image principale" class="center-image">
@@ -17,6 +17,10 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
+    <div class="button">
     <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
+    <button mat-button (click)="openRentDialog()">Louer</button>
+    </div>
   </mat-card-actions>
+
 </mat-card>

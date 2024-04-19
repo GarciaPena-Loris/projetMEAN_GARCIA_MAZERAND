@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
@@ -31,7 +31,6 @@ export class RentComponent implements OnInit {
     // Fermer le popup
     this.dialogRef.close();
   }
-
 
   annulerLocation(): void {
     // Fermer le popup sans rien faire

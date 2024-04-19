@@ -45,6 +45,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: 5%;
 }
 
 .price {
@@ -55,6 +56,11 @@
   font-weight: bold;
 }
 
+.button{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
 
 
