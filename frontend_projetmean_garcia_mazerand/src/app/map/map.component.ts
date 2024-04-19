@@ -9,7 +9,7 @@ import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 })
 export class MapComponent implements OnInit {
   @Input() logements: any;
-  @ViewChild(MapInfoWindow, { static: false }) infoWindow?: MapInfoWindow;
+  @ViewChild(MapInfoWindow, {static: false}) infoWindow?: MapInfoWindow;
 
   constructor() {
   }
@@ -38,6 +38,8 @@ export class MapComponent implements OnInit {
   infoContent: string = '';
   markers: Set<google.maps.Marker> = new Set();
 
+  selectedLogement: Bien | undefined;
+
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = (event.latLng.toJSON())
   }
@@ -48,7 +50,7 @@ export class MapComponent implements OnInit {
         lat: logement.latitude ?? 0,
         lng: logement.longitude ?? 0
       },
-      title: logement.rue + ' ' + logement.commune,
+      title: logement.idBien.toString(),
       animation: google.maps.Animation.DROP,
       draggable: false,
     });
@@ -60,7 +62,10 @@ export class MapComponent implements OnInit {
   }
 
   openMapInfo(content: string, marker: MapMarker): void {
-    this.infoContent = content;
+    const selectedId = parseInt(content, 10);
+    this.selectedLogement = this.logements.find((logement: { idBien: number; }) => logement.idBien === selectedId);
+    console.log(content)
+    console.log(this.selectedLogement)
     this.infoWindow?.open(marker);
   }
 

@@ -1,5 +1,5 @@
 
-import {Component, Injectable, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Bien} from '../model/bien.interface';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
@@ -16,9 +16,14 @@ export class HousingComponent {
   @Input() logements: any;
   displayedLogements: Bien[] = [];
 
-
   constructor() { }
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['logements'] && changes['logements'].currentValue) {
+      this.displayedLogements = this.logements.slice(0, 16);
+    }
+  }
 
   onPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
