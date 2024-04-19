@@ -1,49 +1,23 @@
 
-<!--<div-->
-<!--  fxLayout="row wrap"-->
-<!--  fxLayout.lt-sm="column"-->
-<!--  fxLayoutGap="32px"-->
-<!--  fxLayoutAlign="flex-start">-->
-
-
-<!--    <ng-container *ngFor="let logement of logementsALouer">-->
-
-<!--  <mat-card>-->
-
-<!--    <img mat-card-image [src]="logement.imagePrincipale" alt="Image principale du bien">-->
-<!--    <mat-card-header>-->
-<!--      <mat-card-title>{{ logement.commune }}</mat-card-title>-->
-<!--      <mat-card-subtitle>{{ logement.typeLogement }}</mat-card-subtitle>-->
-<!--    </mat-card-header>-->
-<!--    <mat-card-content>-->
-<!--      <p>{{ logement.description }}</p>-->
-<!--      <p>{{ logement.rue }}, {{ logement.cp }}</p>-->
-<!--      <p>{{ logement.nbChambres }} chambre(s), {{ logement.nbCouchages }} couchage(s)</p>-->
-<!--      <p>Distance au centre : {{ logement.distance }} mètres</p>-->
-<!--      <p>Prix : {{ logement.prix }} euros</p>-->
-<!--      <p>Surface : {{ logement.surface }} m²</p>-->
-<!--    </mat-card-content>-->
-<!--    <mat-card-actions>-->
-<!--      <button mat-button>Plus de détails</button>-->
-<!--    </mat-card-actions>-->
-<!--  </mat-card>-->
-
-<!--</div>-->
-<!--</div>-->
 <div
   fxLayout="row wrap"
   fxLayout.lt-sm="column"
-  fxLayoutGap="32px"
+  fxLayoutGap="10px"
   fxLayoutAlign="flex-start">
-  <ng-container *ngFor="let logement of logementsALouer">
-    <app-housing-card [logement]="logement"
-      fxFlex="0 1 calc(33.3% - 32px)"
-      fxFlex.lt-md="0 1 calc(50% - 32px)"
-      fxFlex.lt-sm="100%"
-    >
-    </app-housing-card>
-  </ng-container>
+  <app-housing-card *ngFor="let logement of displayedLogements "
+                    [logement]="logement"
+                    fxFlex="0 1 calc(25% - 32px)"
+                    fxFlex.lt-md="0 1 calc(50% - 10px)"
+                    fxFlex.lt-sm="100%"
+  >
+  </app-housing-card>
 </div>
+<mat-paginator [length]="logementsALouer.length"
+               pageSize="16"
+               (page)="onPageChange($event)">
+</mat-paginator>
+<!--               [pageSizeOptions]="[16, 32, 48]"-->
+
 
 <!--<div *ngFor="let logement of logementsALouer">-->
 <!--  <app-housing-card [logement]="logement"></app-housing-card>-->

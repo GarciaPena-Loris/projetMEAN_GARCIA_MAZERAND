@@ -18,6 +18,10 @@ import {MatCardModule} from "@angular/material/card";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { HousingCardComponent } from './housing-card/housing-card.component';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { RentComponent } from './rent/rent.component';
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -25,7 +29,8 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
     SearchFormComponent,
     HeaderComponent,
     HousingComponent,
-    HousingCardComponent
+    HousingCardComponent,
+    RentComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,9 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
     HttpClientModule,
     MatCardModule,
     FlexLayoutModule,
-    FlexLayoutServerModule
+    FlexLayoutServerModule,
+    MatPaginatorModule,
+    FormsModule,
   ],
   providers: [
     provideClientHydration(),

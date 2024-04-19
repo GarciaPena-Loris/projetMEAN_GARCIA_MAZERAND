@@ -13,7 +13,7 @@ export class HousingService {
   }
 
   getAllBiens(): Observable<Bien[]> {
-    const body = {"criteria": {"prixMax": 30}}
+    const body = {"criteria": {"prixMax": 100}}
     return this.http.post<Bien[]>(this.apiUrl + '/biens/search', body);
   }
 }
