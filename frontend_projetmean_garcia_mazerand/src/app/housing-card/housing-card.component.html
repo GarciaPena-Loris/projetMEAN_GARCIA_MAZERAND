@@ -1,7 +1,7 @@
 <mat-card class="housing-card">
   <mat-card-header>
     <mat-card-title>{{ logement && logement.commune }}</mat-card-title>
-    <mat-card-subtitle>{{ logement && logement.typeLogement }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ logement && logement.typeLogement }} de {{ logement && logement.surface }} m²</mat-card-subtitle>
     <div class="price">{{ logement && logement.prix }}€/nuit</div>
   </mat-card-header>
   <div class="image-container">

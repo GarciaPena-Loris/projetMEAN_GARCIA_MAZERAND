@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, SimpleChanges} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, SimpleChanges, QueryList} from '@angular/core';
 import {Bien} from "../model/bien.interface";
 import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 
@@ -9,7 +9,7 @@ import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 })
 export class MapComponent implements OnInit {
   @Input() logements: any;
-  @ViewChild(MapInfoWindow, {static: false}) infoWindow?: MapInfoWindow;
+  @ViewChild(MapInfoWindow, {static: false}) housingInfoWindow?: MapInfoWindow;
 
   constructor() {
   }
@@ -35,9 +35,10 @@ export class MapComponent implements OnInit {
     lng: 2.6653996434831795
   };
   zoom = 6;
-  infoContent: string = '';
   markers: Set<google.maps.Marker> = new Set();
 
+  showPrice = false;
+  infoLogement: string = '';
   selectedLogement: Bien | undefined;
 
   move(event: google.maps.MapMouseEvent) {
@@ -53,6 +54,7 @@ export class MapComponent implements OnInit {
       title: logement.idBien.toString(),
       animation: google.maps.Animation.DROP,
       draggable: false,
+      label: logement.prix.toString() ?? 0
     });
   }
 
@@ -64,9 +66,27 @@ export class MapComponent implements OnInit {
   openMapInfo(content: string, marker: MapMarker): void {
     const selectedId = parseInt(content, 10);
     this.selectedLogement = this.logements.find((logement: { idBien: number; }) => logement.idBien === selectedId);
-    console.log(content)
-    console.log(this.selectedLogement)
-    this.infoWindow?.open(marker);
+    this.showPrice = false;
+    this.housingInfoWindow?.open(marker);
+  }
+
+  showMapPrice(content: string, marker: MapMarker): void {
+    const selectedId = parseInt(content, 10);
+    this.selectedLogement = this.logements.find((logement: { idBien: number; }) => logement.idBien === selectedId);
+    if (this.selectedLogement) {
+      const log = this.selectedLogement;
+      this.infoLogement = log.commune + ": " + log.typeLogement.toString().charAt(0).toUpperCase() + log.typeLogement.toString().slice(1)
+        + " de " + log.surface.toString() + " m², à " + log.prix.toString() + "€/nuits";
+    }
+    this.showPrice = true;
+    this.housingInfoWindow?.open(marker);
+  }
+
+  hideMapPrice(): void {
+    if (this.showPrice) {
+      this.showPrice = false;
+      this.housingInfoWindow?.close()
+    }
   }
 
 
