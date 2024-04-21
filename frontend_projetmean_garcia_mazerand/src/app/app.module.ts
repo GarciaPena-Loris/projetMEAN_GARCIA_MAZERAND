@@ -20,11 +20,12 @@ import { HousingCardComponent } from './housing-card/housing-card.component';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { RentComponent } from './rent/rent.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MapComponent} from "./map/map.component";
 import {SelectorComponent} from "./selector/selector.component";
-import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {GoogleMapsModule} from "@angular/google-maps";
+import { AuthCardComponent } from './auth-card/auth-card.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {GoogleMapsModule} from "@angular/google-maps";
     HousingCardComponent,
     RentComponent,
     SelectorComponent,
-    MapComponent
+    MapComponent,
+    AuthCardComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,9 @@ import {GoogleMapsModule} from "@angular/google-maps";
     FormsModule,
     HttpClientModule,
     MatTabGroup,
-    MatTab
+    MatTab,
+    MatTabContent,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),

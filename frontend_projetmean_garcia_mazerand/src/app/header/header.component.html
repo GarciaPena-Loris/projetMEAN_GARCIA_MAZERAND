@@ -2,7 +2,8 @@
   <div class="app-name">waterbnb</div>
   <app-search-form></app-search-form>
   <div class="login">
-    <button mat-stroked-button class="login-button">Login <mat-icon>login</mat-icon></button>
-
+    <button mat-stroked-button class="login-button" (click)="authService.isAuthenticatedUser ? logout() : login()">
+      {{ authService.isAuthenticatedUser ? 'Déconnexion' : 'Login' }} <mat-icon>login</mat-icon>
+    </button>
   </div>
 </header>

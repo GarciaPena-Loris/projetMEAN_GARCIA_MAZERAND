@@ -1,24 +1,15 @@
-
-<div
-  fxLayout="row wrap"
-  fxLayout.lt-sm="column"
-  fxLayoutGap="10px"
-  fxLayoutAlign="flex-start">
-  <app-housing-card *ngFor="let logement of displayedLogements "
-                    [logement]="logement"
-                    fxFlex="0 1 calc(25% - 32px)"
-                    fxFlex.lt-md="0 1 calc(50% - 10px)"
-                    fxFlex.lt-sm="100%"
-  >
-  </app-housing-card>
+<div class="grid">
+  <div
+    fxLayout="row wrap"
+    fxLayout.lt-sm="column"
+    fxLayoutAlign="space-around center">
+    <app-housing-card *ngFor="let logement of displayedLogements "
+                      [logement]="logement"
+    >
+    </app-housing-card>
+  </div>
+  <mat-paginator [length]="logements.length"
+                 pageSize="16"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
 </div>
-<mat-paginator [length]="logements.length"
-               pageSize="16"
-               (page)="onPageChange($event)">
-</mat-paginator>
-<!--               [pageSizeOptions]="[16, 32, 48]"-->
-
-
-<!--<div *ngFor="let logement of logementsALouer">-->
-<!--  <app-housing-card [logement]="logement"></app-housing-card>-->
-<!--</div>-->
