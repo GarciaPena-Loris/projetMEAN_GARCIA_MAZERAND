@@ -4,9 +4,11 @@
     <mat-card-subtitle>{{ logement && logement.typeLogement }} de {{ logement && logement.surface }} m²</mat-card-subtitle>
     <div class="price">{{ logement && logement.prix }}€/nuit</div>
   </mat-card-header>
-  <div class="image-container">
-    <img mat-card-image [src]="logement && logement.imagePrincipale + '.jpg'" title="Afficher le logement" alt="Image principale" class="center-image" (click)="openHousingView()">
-  </div>
+  <mat-grid-list cols="3" rowHeight="200px">
+    <mat-grid-tile *ngFor="let tile of getTiles()">
+      <img [src]="tile.url" alt="Image" style="width: 100%; height: 100%; object-fit: cover;">
+    </mat-grid-tile>
+  </mat-grid-list>
   <mat-card-content class="binks">
     <p>{{ logement && logement.rue }}</p>
     <p>{{ logement && logement.nbChambres }} chambre{{logement && logement.nbChambres>1 ? 's' : ''}}, {{ logement && logement.nbCouchages }} couchage{{logement && logement.nbCouchages>1 ? 's' : ''}}</p>
@@ -15,12 +17,20 @@
       <p>A {{ logement && logement.distance }} mètres du centre </p>
       <p>Surface : {{ logement && logement.surface }} m²</p>
     </div>
+
+    <!-- Afficher les avis -->
+    <div *ngIf="locations.length > 0">
+      <h3>Avis des locataires</h3>
+      <div *ngFor="let location of locations">
+        <p>Note : {{ location.avis.note }}/5</p>
+        <p>Commentaire : {{ location.avis.commentaire }}</p>
+      </div>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <div class="button">
-    <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
-    <button mat-stroked-button (click)="openRentDialog()">Louer</button>
+      <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
+      <button mat-stroked-button (click)="openRentDialog()">Louer</button>
     </div>
   </mat-card-actions>
-
 </mat-card>

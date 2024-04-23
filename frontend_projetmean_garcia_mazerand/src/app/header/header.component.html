@@ -1,5 +1,5 @@
 <header class="header-container">
-  <div class="app-name">waterbnb</div>
+  <div class="app-name" (click)="navigateHomePage()">waterbnb</div>
   <app-search-form></app-search-form>
   <div class="login">
     <button mat-stroked-button class="login-button" (click)="authService.isAuthenticatedUser ? logout() : login()">

@@ -13,31 +13,41 @@ const port = process.env.PORT || 3080;
 
 app.use(bodyParser.json());
 app.use(cors())
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({message: 'Internal server error'});
+});
+
 
 // Routes pour les utilisateurs
+// GET all users
 app.get('/api/utilisateurs', (req, res) => {
     utilisateursController.getUtilisateurs().then(data => res.json(data));
 });
 
-app.post('/api/utilisateur', (req, res) => {
-    console.info(req.body);
-    utilisateursController.createUtilisateur(req.body.utilisateur).then(data => res.json(data));
+// POST new user
+app.post('/api/utilisateurs', (req, res) => {
+    utilisateursController.createUtilisateur(req.body).then(data => res.json(data));
 });
 
-app.put('/api/utilisateur', (req, res) => {
-    utilisateursController.updateUtilisateur(req.body.utilisateur).then(data => res.json(data));
+// PUT update user
+app.put('/api/utilisateurs/:id', (req, res) => {
+    utilisateursController.updateUtilisateur(req.params.id, req.body).then(data => res.json(data));
 });
 
-app.delete('/api/utilisateur/:id', (req, res) => {
+// DELETE user
+app.delete('/api/utilisateurs/:id', (req, res) => {
     utilisateursController.deleteUtilisateur(req.params.id).then(data => res.json(data));
 });
 
+// Register new user
 app.post('/api/register', (req, res) => {
-    utilisateursController.register(req.body.utilisateur).then(data => res.json(data));
+    utilisateursController.register(req.body).then(data => res.json(data));
 });
 
-app.post('/api/login', (req, res) => {
-    utilisateursController.login(req.body.email, req.body.password).then(data => res.json(data));
+// Login user
+app.post('/api/login', (req, res, next) => {
+    utilisateursController.login(req, res, next);
 });
 
 
@@ -51,7 +61,6 @@ app.get('/api/lastBienId', (req, res) => {
 });
 
 app.post('/api/bien', (req, res) => {
-    console.info(req.body);
     biensController.createBien(req.body.bien).then(data => res.json(data));
 });
 
@@ -76,7 +85,7 @@ app.post('/api/creerMultipleBiensFromCityAleatoire', (req, res) => {
 });
 
 app.post('/api/biens/search', (req, res) => {
-    const { criteria } = req.body;
+    const {criteria} = req.body;
     biensController.getBiensByCriteria(criteria).then(data => res.json(data));
 });
 

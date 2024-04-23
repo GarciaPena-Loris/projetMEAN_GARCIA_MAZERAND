@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { Bien } from '../model/bien.interface';
+import {Component, Input} from '@angular/core';
+import {Bien} from '../model/bien.interface';
 import {MatDialog} from "@angular/material/dialog";
 import {RentComponent} from "../rent/rent.component";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-housing-card',
@@ -12,11 +13,22 @@ import {RentComponent} from "../rent/rent.component";
 export class HousingCardComponent {
   @Input() logement?: Bien;
   showDetails = false;
-  constructor(private dialog: MatDialog) {}
+
+  constructor(private dialog: MatDialog, private router: Router) {
+  }
 
   toggleDetails() {
     this.showDetails = !this.showDetails;
-}
+  }
+
+  openHousingView() {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        logement: this.logement
+      }
+    };
+    this.router.navigate(['/housingView'], navigationExtras);
+  }
 
   openRentDialog() {
     const dialogRef = this.dialog.open(RentComponent, {
@@ -30,5 +42,5 @@ export class HousingCardComponent {
         // Ajoutez ici le code pour louer le logement
       }
     });
-}
+  }
 }

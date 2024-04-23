@@ -26,6 +26,8 @@ import {SelectorComponent} from "./selector/selector.component";
 import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {GoogleMapsModule} from "@angular/google-maps";
 import { AuthCardComponent } from './auth-card/auth-card.component';
+import { HousingViewComponent } from './housing-view/housing-view.component';
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { AuthCardComponent } from './auth-card/auth-card.component';
     RentComponent,
     SelectorComponent,
     MapComponent,
-    AuthCardComponent
+    AuthCardComponent,
+    HousingViewComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,9 @@ import { AuthCardComponent } from './auth-card/auth-card.component';
     MatTabGroup,
     MatTab,
     MatTabContent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatGridList,
+    MatGridTile
   ],
   providers: [
     provideClientHydration(),

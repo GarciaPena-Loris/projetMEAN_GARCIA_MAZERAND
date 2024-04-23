@@ -49,6 +49,7 @@ export class AuthService {
   }
 
   logout() {
+    this.cookieService.delete('authToken');
     this._isAuthenticated = false;
     this._currentUser = undefined;
   }

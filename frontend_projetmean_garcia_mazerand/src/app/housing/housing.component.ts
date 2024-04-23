@@ -21,7 +21,7 @@ export class HousingComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['logements'] && changes['logements'].currentValue) {
-      this.displayedLogements = this.logements.slice(0, 16);
+      this.displayedLogements = this.logements.slice(0, 14);
     }
   }
 

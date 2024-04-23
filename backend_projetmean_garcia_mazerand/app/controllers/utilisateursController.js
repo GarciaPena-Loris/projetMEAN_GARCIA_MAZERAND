@@ -1,10 +1,10 @@
-const utilisateurService  = require('../services/utilisateursService');
+const utilisateurService = require('../services/utilisateursService');
 const bcrypt = require('bcrypt');
 
 class UtilisateurController {
 
     async getUtilisateurs() {
-        console.info('Controller: getUtilisateurs')
+        console.info('Controller: getUtilisateurs');
         return await utilisateurService.getUtilisateurs();
     }
 
@@ -13,9 +13,9 @@ class UtilisateurController {
         return await utilisateurService.createUtilisateur(utilisateur);
     }
 
-    async updateUtilisateur(utilisateur) {
-        console.info('Controller: updateUtilisateur', utilisateur);
-        return await utilisateurService.updateUtilisateur(utilisateur);
+    async updateUtilisateur(utilisateurId, utilisateur) {
+        console.info('Controller: updateUtilisateur', utilisateurId, utilisateur);
+        return await utilisateurService.updateUtilisateur(utilisateurId, utilisateur);
     }
 
     async deleteUtilisateur(utilisateurId) {
@@ -30,13 +30,19 @@ class UtilisateurController {
         return await utilisateurService.createUtilisateur(utilisateur);
     }
 
-    async login(email, password) {
-        console.info('Controller: login', email);
-        const utilisateur = await utilisateurService.getUtilisateurByEmail(email);
-        if (utilisateur && await bcrypt.compare(password, utilisateur.mdp)) {
-            return utilisateur; // Login successful
+    async login(req, res, next) {
+        console.info('Controller: login', req.body.mail);
+        try {
+            const utilisateur = await utilisateurService.getUtilisateurByEmail(req.body.mail);
+            if (utilisateur && await bcrypt.compare(req.body.mdp, utilisateur.mdp)) {
+                return res.json(utilisateur); // Login successful
+            }
+            throw new Error('Invalid email or password');
+        } catch (error) {
+            next(error); // Pass the error to the Express error handler
         }
-        throw new Error('Invalid email or password');
     }
+
 }
+
 module.exports = new UtilisateurController();

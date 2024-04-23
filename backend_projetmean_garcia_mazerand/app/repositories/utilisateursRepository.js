@@ -1,5 +1,5 @@
-const { connect, disconnect } = require('../../config/db.config');
-const { Utilisateur } = require('../models/utilisateursModel');
+const {connect, disconnect} = require('../../config/db.config');
+const {Utilisateur} = require('../models/utilisateursModel');
 
 class UtilisateurRepository {
 
@@ -13,8 +13,8 @@ class UtilisateurRepository {
         return utilisateurs;
     }
 
-    async getUtilisateurByEmail(email) {
-        const utilisateur = await Utilisateur.findOne({email: email});
+    async getUtilisateurByEmail(mail) {
+        const utilisateur = await Utilisateur.findOne({mail: mail});
         console.info('Utilisateur récupéré avec succès: ' + utilisateur);
         return utilisateur;
     }
@@ -24,7 +24,7 @@ class UtilisateurRepository {
         try {
             data = await Utilisateur.create(utilisateur);
             console.info('Utilisateur créé avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return data;
@@ -35,7 +35,7 @@ class UtilisateurRepository {
         try {
             data = await Utilisateur.updateOne(utilisateur);
             console.info('Utilisateur mis à jour avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return data;
@@ -44,9 +44,9 @@ class UtilisateurRepository {
     async deleteUtilisateur(utilisateurId) {
         let data = {};
         try {
-            data = await Utilisateur.deleteOne({_id : utilisateurId});
+            data = await Utilisateur.deleteOne({_id: utilisateurId});
             console.info('Utilisateur supprimé avec succès: ' + data);
-        } catch(err) {
+        } catch (err) {
             console.error('Error::' + err);
         }
         return {status: `${(data.deletedCount > 0)}`};
