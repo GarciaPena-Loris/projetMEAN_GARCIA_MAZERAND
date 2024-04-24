@@ -14,7 +14,7 @@ class LocationsRepository {
     }
 
     async getLocationByBienId(bienId) {
-        const location = await Location.findOne({idBien: bienId});
+        const location = await Location.find({idBien: bienId});
         console.info('Location récupéré avec succès: ' + location);
         return location;
     }
