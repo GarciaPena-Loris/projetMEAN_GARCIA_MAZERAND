@@ -7,5 +7,5 @@ export interface Location {
   mailLoueur: string;
   dateDebut: number;
   dateFin: number;
-  avis: Avis;
+  avis: Avis[];
 }
