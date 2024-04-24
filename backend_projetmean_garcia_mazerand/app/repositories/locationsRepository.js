@@ -13,6 +13,12 @@ class LocationsRepository {
         return locations;
     }
 
+    async getLocationByBienId(bienId) {
+        const location = await Location.findOne({idBien: bienId});
+        console.info('Location récupéré avec succès: ' + location);
+        return location;
+    }
+
     async createLocation(location) {
         let data = {};
         try {

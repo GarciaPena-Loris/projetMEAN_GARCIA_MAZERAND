@@ -95,6 +95,10 @@ app.get('/api/locations', (req, res) => {
     locationsController.getLocations().then(data => res.json(data));
 });
 
+app.get('/api/locations/:bienId', (req, res) => {
+    locationsController.getLocationByBienId(req.params.bienId).then(data => res.json(data));
+});
+
 app.post('/api/location', (req, res) => {
     console.info(req.body);
     locationsController.createLocation(req.body.location).then(data => res.json(data));
@@ -106,6 +110,13 @@ app.put('/api/location', (req, res) => {
 
 app.delete('/api/location/:id', (req, res) => {
     locationsController.deleteLocation(req.params.id).then(data => res.json(data));
+});
+
+app.post('/api/creerFausseReservation', (req, res) => {
+    locationsController.createFakeReservations().then(data => res.json(data));
+});
+app.get('/api/afficherFausseReservation', (req, res) => {
+    locationsController.showFakeReservations().then(data => res.json(data));
 });
 
 // Route pour la page d'accueil
