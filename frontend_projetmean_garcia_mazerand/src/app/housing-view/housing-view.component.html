@@ -1,17 +1,24 @@
-<mat-card class="housing-card">
-  <mat-card-header>
+<div class="housing-card">
+  <div>
     <mat-card-title>{{ logement && logement.commune }}</mat-card-title>
-    <mat-card-subtitle>{{ logement && logement.typeLogement }} de {{ logement && logement.surface }} m²</mat-card-subtitle>
+    <mat-card-subtitle>{{ logement && logement.typeLogement }} de {{ logement && logement.surface }}m²
+    </mat-card-subtitle>
     <div class="price">{{ logement && logement.prix }}€/nuit</div>
-  </mat-card-header>
-  <mat-grid-list cols="3" rowHeight="200px">
-    <mat-grid-tile *ngFor="let tile of getTiles()">
-      <img [src]="tile.url" alt="Image" style="width: 100%; height: 100%; object-fit: cover;">
-    </mat-grid-tile>
+  </div>
+  <mat-grid-list cols="4">
+    @for (tile of getTiles(); track tile) {
+      <mat-grid-tile
+        [colspan]="tile.cols"
+        [rowspan]="tile.rows"
+      >
+        <img [src]="tile.url" alt="Image">
+      </mat-grid-tile>
+    }
   </mat-grid-list>
-  <mat-card-content class="binks">
+  <div class="binks">
     <p>{{ logement && logement.rue }}</p>
-    <p>{{ logement && logement.nbChambres }} chambre{{logement && logement.nbChambres>1 ? 's' : ''}}, {{ logement && logement.nbCouchages }} couchage{{logement && logement.nbCouchages>1 ? 's' : ''}}</p>
+    <p>{{ logement && logement.nbChambres }} chambre{{ logement && logement.nbChambres > 1 ? 's' : '' }}
+      , {{ logement && logement.nbCouchages }} couchage{{ logement && logement.nbCouchages > 1 ? 's' : '' }}</p>
     <div *ngIf="showDetails">
       <p>{{ logement && logement.description }}</p>
       <p>A {{ logement && logement.distance }} mètres du centre </p>
@@ -26,11 +33,11 @@
         <p>Commentaire : {{ location.avis.commentaire }}</p>
       </div>
     </div>
-  </mat-card-content>
-  <mat-card-actions>
+  </div>
+  <div>
     <div class="button">
       <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
       <button mat-stroked-button (click)="openRentDialog()">Louer</button>
     </div>
-  </mat-card-actions>
-</mat-card>
+  </div>
+</div>

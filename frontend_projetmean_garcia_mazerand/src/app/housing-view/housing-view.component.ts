@@ -7,8 +7,8 @@ import {Router} from "@angular/router";
 
 export interface Tile {
   url: string;
-  colspan: number;
-  rowspan: number;
+  cols: number;
+  rows: number;
 }
 
 @Component({
@@ -39,10 +39,10 @@ export class HousingViewComponent {
   getTiles(): Tile[] {
     const tiles: Tile[] = [];
     // Première image principale
-    tiles.push({url: this.logement.imagePrincipale + '.jpg', colspan: 2, rowspan: 2});
+    tiles.push({url: this.logement.imagePrincipale + '.jpg', cols: 2, rows: 2});
     // Les autres images
     this.logement.images.slice(1).forEach(image => {
-      tiles.push({url: image + '.jpg', colspan: 1, rowspan: 1});
+      tiles.push({url: image + '.jpg', cols: 1, rows: 1});
     });
     return tiles;
   }
