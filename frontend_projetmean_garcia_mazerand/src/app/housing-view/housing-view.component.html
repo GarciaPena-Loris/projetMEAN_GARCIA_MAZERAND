@@ -1,11 +1,8 @@
-<div class="housing-card">
-  <div>
-    <mat-card-title>{{ logement && logement.commune }}</mat-card-title>
-    <mat-card-subtitle>{{ logement && logement.typeLogement }} de {{ logement && logement.surface }}m²
-    </mat-card-subtitle>
-    <div class="price">{{ logement && logement.prix }}€/nuit</div>
-  </div>
-  <mat-grid-list cols="4">
+<div class="housing-card" style="position: relative">
+
+  <h3 class="title">{{ logement && logement.typeLogement.toUpperCase() + "  -  " + logement.commune }}</h3>
+
+  <mat-grid-list cols="4" class="image-container">
     @for (tile of getTiles(); track tile) {
       <mat-grid-tile
         [colspan]="tile.cols"
@@ -15,29 +12,31 @@
       </mat-grid-tile>
     }
   </mat-grid-list>
-  <div class="binks">
+
+  <div>
+    <p class="price">{{ logement && logement.prix }} €/nuit</p>
     <p>{{ logement && logement.rue }}</p>
     <p>{{ logement && logement.nbChambres }} chambre{{ logement && logement.nbChambres > 1 ? 's' : '' }}
       , {{ logement && logement.nbCouchages }} couchage{{ logement && logement.nbCouchages > 1 ? 's' : '' }}</p>
-    <div *ngIf="showDetails">
-      <p>{{ logement && logement.description }}</p>
-      <p>A {{ logement && logement.distance }} mètres du centre </p>
-      <p>Surface : {{ logement && logement.surface }} m²</p>
+
+    <p>{{ logement && logement.description }}</p>
+    <p>A {{ logement && logement.distance }} mètres du centre </p>
+    <p>Surface : {{ logement && logement.surface }} m²</p>
+
+    <div class="button">
+      <button mat-stroked-button (click)="openRentDialog()" class="color-button">Louer</button>
     </div>
 
     <!-- Afficher les avis -->
-    <div *ngIf="locations.length > 0">
-      <h3>Avis des locataires</h3>
-      <div *ngFor="let location of locations">
-        <p>Note : {{ location.avis.note }}/5</p>
-        <p>Commentaire : {{ location.avis.commentaire }}</p>
+    <div class="avis" *ngIf="locations.length > 0">
+      <h3 class="avis-title">Avis des locataires :</h3>
+      <div *ngFor="let location of locations" class="avis-item">
+        <p class="note">  {{ location.avis[0].note }}/5⭐</p>
+        <p>- {{ location.avis[0].commentaire }}</p>
+        <p>{{location.mailLoueur}}</p>
       </div>
     </div>
   </div>
   <div>
-    <div class="button">
-      <button mat-button (click)="toggleDetails()">{{ showDetails ? 'Moins de détails' : 'Plus de détails' }}</button>
-      <button mat-stroked-button (click)="openRentDialog()">Louer</button>
-    </div>
   </div>
 </div>

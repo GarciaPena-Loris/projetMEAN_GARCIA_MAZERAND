@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Bien} from "../model/bien.interface";
 import {Location} from "../model/location.interface";
 import {Router} from "@angular/router";
+import {RentComponent} from "../rent/rent.component";
 
 export interface Tile {
   url: string;
@@ -32,6 +33,7 @@ export class HousingViewComponent {
       this.locationService.getLocationsByBienId(this.logement.idBien)
         .subscribe(locations => {
           this.locations = locations;
+          console.log(locations);
         });
     }
   }
@@ -47,11 +49,17 @@ export class HousingViewComponent {
     return tiles;
   }
 
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
-  }
-
   openRentDialog() {
-    // Implémentez la logique pour ouvrir une boîte de dialogue pour la location du bien
+    const dialogRef = this.dialog.open(RentComponent, {
+      width: '800px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // L'utilisateur a cliqué sur le bouton "Louer"
+        // Ajoutez ici le code pour louer le logement
+      }
+    });
   }
 }

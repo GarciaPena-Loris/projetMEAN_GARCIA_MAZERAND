@@ -1,11 +1,3 @@
-.image-container {
-  width: 300px;
-  height: 300px;
-  /*overflow: hidden;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .image-container img {
   width: 100%;
@@ -13,39 +5,71 @@
   object-fit: cover;
 }
 
-.image-container img:hover {
-  cursor: pointer;
-}
-
 .housing-card {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  position: relative;
-}
-
-.binks {
-  margin-top: 3%;
-}
-
-.housing-card {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-top: 5%;
-}
-
-.price {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  margin: 0 20%;
 }
 
 .button {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
+  font-size: 24px;
+  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
+.color-button:hover {
+  background-color: cadetblue;
+  color: #fff;
+}
 
+.image-container{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin-top: 1%;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 70%;
+}
+
+.price {
+  font-size: 1.6em;
+}
+
+.avis {
+  margin-top: 3%;
+  margin-bottom: 50px;
+}
+
+.note {
+  font-size: 1.6em; /* Ajustez la taille de la police selon vos besoins */
+  margin-top: 50px;
+
+}
+
+.comm-title {
+  font-size: 1.3em; /* Ajustez la taille de la police selon vos besoins */
+}
+
+.avis-title {
+  font-size: 1.7em; /* Ajustez la taille de la police selon vos besoins */
+}
+
+.avis-item {
+  border-bottom: 1px solid #000; /* Ajustez la couleur et l'épaisseur de la bordure selon vos besoins */
+  padding-bottom: 10px; /* Ajustez l'espacement selon vos besoins */
+  margin-bottom: 10px; /* Ajustez l'espacement selon vos besoins */
+}
