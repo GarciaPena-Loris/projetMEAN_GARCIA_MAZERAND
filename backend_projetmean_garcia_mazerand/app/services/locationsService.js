@@ -56,7 +56,7 @@ class LocationsService {
             for (let i = 0; i < numReservations; i++) {
                 const mailLoueur = mailConfig.mail[Math.floor(Math.random() * mailConfig.mail.length)];
                 const note = (Math.floor(Math.random() * 10) + 1) / 2;
-                const commentaire = this.generateFakeComment(bien);
+                const commentaire = this.generateFakeComment(bien, note);
 
                 const fakeReservation = {
                     idBien: bien.idBien,
