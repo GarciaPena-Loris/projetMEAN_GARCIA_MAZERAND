@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormBuilder} from "@angular/forms";
+import {SearchFormService} from "./search-formService";
 
 @Component({
   selector: 'app-search-form',
@@ -7,15 +8,21 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrl: './search-form.component.css'
 })
 export class SearchFormComponent {
-  searchForm = new FormGroup({
-    localisation: new FormControl(''),
-    typeLogement: new FormControl(''),
-    prixMax: new FormControl(''),
-    // dateDebut: new FormControl(''),
-    // dateFin: new FormControl(''),
-    chambreMin: new FormControl(''),
-    couchageMin: new FormControl(''),
-    distanceCentre: new FormControl(''),
-
+  searchForm = this.fb.group({
+    commune: [''],
+    nbCouchagesMin: [''],
+    dateDebut: [''],
+    dateFin: [''],
+    prixMax: [''],
+    typeLogement: [''],
+    nbChambresMin: [''],
+    distanceMax: ['']
   });
+
+  constructor(private fb: FormBuilder, private searchFormService: SearchFormService) {
+  }
+
+  onSubmit() {
+    this.searchFormService.changeSearchForm(this.searchForm.value);
+  }
 }

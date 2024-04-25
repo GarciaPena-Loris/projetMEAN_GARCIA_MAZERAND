@@ -33,7 +33,7 @@ class BiensRepository {
         return data;
     }
 
-    async updateBien(bien) {_è-('"(rty ')
+    async updateBien(bien) {
         let data = {};
         try {
             data = await Bien.updateOne(bien);
@@ -64,6 +64,7 @@ class BiensRepository {
 
         // Ajouter chaque critère à l'objet de recherche s'il est fourni
         if (criteria.commune) searchCriteria.commune = criteria.commune;
+        if (criteria.typeLogement) searchCriteria.typeLogement = criteria.typeLogement;
         if (criteria.prixMax) searchCriteria.prix = { $lte: criteria.prixMax };
         if (criteria.nbChambresMin) searchCriteria.nbChambres = { $gte: criteria.nbChambresMin };
         if (criteria.nbCouchagesMin) searchCriteria.nbCouchages = { $gte: criteria.nbCouchagesMin };

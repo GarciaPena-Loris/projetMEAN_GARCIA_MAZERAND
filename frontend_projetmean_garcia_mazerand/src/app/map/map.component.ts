@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['logements'] && changes['logements'].currentValue) {
+      this.markers.clear();
       this.addMarkersToMap();
     }
   }

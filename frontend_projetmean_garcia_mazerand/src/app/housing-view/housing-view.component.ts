@@ -19,7 +19,7 @@ export interface Tile {
   styleUrl: './housing-view.component.css'
 })
 export class HousingViewComponent {
-  logement: Bien;
+  logement!: Bien;
   locations: Location[] = [];
   moyenneNote = 0;
   nombreCommentaires = 0;
@@ -29,15 +29,17 @@ export class HousingViewComponent {
     const state = navigation?.extras.state as {
       logement: Bien
     }
-    this.logement = state.logement;
+    if (state && state.logement) {
+      this.logement = state.logement;
 
-    if (this.logement && this.logement.idBien) {
-      this.locationService.getLocationsByBienId(this.logement.idBien)
-        .subscribe(locations => {
-          this.locations = locations;
-          this.moyenneNote = parseFloat((locations.reduce((acc, location) => acc + location.avis[0].note, 0) / locations.length).toFixed(1));
-          this.nombreCommentaires = locations.length;
-        });
+      if (this.logement.idBien) {
+        this.locationService.getLocationsByBienId(this.logement.idBien)
+          .subscribe(locations => {
+            this.locations = locations;
+            this.moyenneNote = parseFloat((locations.reduce((acc, location) => acc + location.avis[0].note, 0) / locations.length).toFixed(1));
+            this.nombreCommentaires = locations.length;
+          });
+      }
     }
   }
 
@@ -58,7 +60,6 @@ export class HousingViewComponent {
   }
 
   openImageDialog(url: string): void {
-    console.log(url);
     this.dialog.open(ImageDialogComponent, {
       data: { url },
       panelClass: 'image-dialog',

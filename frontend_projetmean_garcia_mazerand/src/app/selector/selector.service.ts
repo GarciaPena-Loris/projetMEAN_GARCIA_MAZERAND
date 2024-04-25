@@ -16,4 +16,8 @@ export class SelectorService {
     const body = {"criteria": ""}
     return this.http.post<Bien[]>(this.apiUrl + '/biens/search', body);
   }
+
+  getBienWithCriteria(criteria: any): Observable<Bien[]> {
+    return this.http.post<Bien[]>(this.apiUrl + '/biens/search', criteria);
+  }
 }
