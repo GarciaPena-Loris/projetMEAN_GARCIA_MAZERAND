@@ -43,4 +43,6 @@ export class HousingCardComponent {
       }
     });
   }
+
+    protected readonly Math = Math;
 }

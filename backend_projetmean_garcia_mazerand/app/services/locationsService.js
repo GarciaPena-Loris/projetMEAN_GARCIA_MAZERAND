@@ -3,6 +3,7 @@ const biensRepository = require('../repositories/biensRepository');
 const faker = require('faker');
 const mailConfig = require('../../config/mailConfig');
 const commentPieces = require('../../config/commentsConfig');
+const { addDays } = require('date-fns');
 
 class LocationsService {
 
@@ -50,19 +51,21 @@ class LocationsService {
         const fakeReservations = {};
 
         for (const bien of biens) {
-            const numReservations = Math.floor(Math.random() * 5) + 1;
+            const numReservations = Math.floor(Math.random() * 10) + 1;
             fakeReservations[bien.idBien] = [];
 
             for (let i = 0; i < numReservations; i++) {
                 const mailLoueur = mailConfig.mail[Math.floor(Math.random() * mailConfig.mail.length)];
+                const dateDebut = faker.date.past().getTime();
+                const dateFin = addDays(dateDebut, Math.floor(Math.random() * 15) + 1).getTime();
                 const note = (Math.floor(Math.random() * 10) + 1) / 2;
                 const commentaire = this.generateFakeComment(bien, note);
 
                 const fakeReservation = {
                     idBien: bien.idBien,
                     mailLoueur,
-                    dateDebut: faker.date.past().getTime(),
-                    dateFin: faker.date.recent().getTime(),
+                    dateDebut,
+                    dateFin,
                     avis: {
                         note,
                         commentaire

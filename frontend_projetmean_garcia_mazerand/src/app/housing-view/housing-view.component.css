@@ -2,7 +2,6 @@
 .image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .housing-card {
@@ -27,26 +26,35 @@
   color: #fff;
 }
 
-.image-container{
+.image-container {
   width: 100%;
-  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.title {
+.imageView:hover {
+  cursor: pointer;
+}
+
+.titleContainer {
   margin-top: 1%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
   font-size: 20px;
   font-weight: bold;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 70%;
 }
 
 .price {
   font-size: 1.6em;
+}
+
+.info {
+  margin-top: 3%;
 }
 
 .avis {
@@ -57,10 +65,10 @@
 .note {
   font-size: 1.6em; /* Ajustez la taille de la police selon vos besoins */
   margin-top: 50px;
-
 }
 
 .comm-title {
+  margin-left: 1%;
   font-size: 1.3em; /* Ajustez la taille de la police selon vos besoins */
 }
 
@@ -68,8 +76,18 @@
   font-size: 1.7em; /* Ajustez la taille de la police selon vos besoins */
 }
 
-.avis-item {
-  border-bottom: 1px solid #000; /* Ajustez la couleur et l'épaisseur de la bordure selon vos besoins */
-  padding-bottom: 10px; /* Ajustez l'espacement selon vos besoins */
-  margin-bottom: 10px; /* Ajustez l'espacement selon vos besoins */
+.hrInfo {
+  width: 10%;
+  margin: 1% 0 1% 2%;
+}
+
+.hrView {
+  width: 50%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.infoAvis {
+  display: flex;
+  justify-content: space-between;
 }

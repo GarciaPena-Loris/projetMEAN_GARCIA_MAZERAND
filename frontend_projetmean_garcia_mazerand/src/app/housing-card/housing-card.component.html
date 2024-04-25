@@ -12,7 +12,7 @@
     <p>{{ logement && logement.nbChambres }} chambre{{logement && logement.nbChambres>1 ? 's' : ''}}, {{ logement && logement.nbCouchages }} couchage{{logement && logement.nbCouchages>1 ? 's' : ''}}</p>
     <div *ngIf="showDetails">
       <p>{{ logement && logement.description }}</p>
-      <p>A {{ logement && logement.distance }} mètres du centre </p>
+      <p>Situé à {{ logement && Math.floor(logement.distance) }} mètres du centre </p>
       <p>Surface : {{ logement && logement.surface }} m²</p>
     </div>
   </mat-card-content>

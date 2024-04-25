@@ -1,27 +1,32 @@
 <div class="housing-card" style="position: relative">
 
-  <h3 class="title">{{ logement && logement.typeLogement.toUpperCase() + "  -  " + logement.commune }}</h3>
+  <div class="titleContainer">
+    <h3 class="title">{{ logement && logement.typeLogement.toUpperCase() + "  ·  " + logement.commune }}</h3>
+    <h3 class="title">⭐ {{ moyenneNote }}</h3>
+  </div>
 
   <mat-grid-list cols="4" class="image-container">
-    @for (tile of getTiles(); track tile) {
-      <mat-grid-tile
-        [colspan]="tile.cols"
-        [rowspan]="tile.rows"
-      >
-        <img [src]="tile.url" alt="Image">
-      </mat-grid-tile>
-    }
+    <mat-grid-tile
+      *ngFor="let tile of getTiles();"
+      [colspan]="tile.cols"
+      [rowspan]="tile.rows"
+      (click)="openImageDialog(tile.url)"
+    >
+      <img [src]="tile.url" alt="Image" class="imageView">
+    </mat-grid-tile>
   </mat-grid-list>
 
-  <div>
+  <div class="info">
     <p class="price">{{ logement && logement.prix }} €/nuit</p>
     <p>{{ logement && logement.rue }}</p>
-    <p>{{ logement && logement.nbChambres }} chambre{{ logement && logement.nbChambres > 1 ? 's' : '' }}
-      , {{ logement && logement.nbCouchages }} couchage{{ logement && logement.nbCouchages > 1 ? 's' : '' }}</p>
+    <b>{{ logement && logement.nbChambres }} chambre{{ logement && logement.nbChambres > 1 ? 's' : '' }},
+      {{ logement && logement.nbCouchages }} couchage{{ logement && logement.nbCouchages > 1 ? 's' : '' }},
+      {{ logement && logement.surface }} m²
+    </b>
+    <hr class="hrInfo">
 
     <p>{{ logement && logement.description }}</p>
-    <p>A {{ logement && logement.distance }} mètres du centre </p>
-    <p>Surface : {{ logement && logement.surface }} m²</p>
+    <i>Situé à {{ logement && Math.floor(logement.distance) }} mètres du centre </i>
 
     <div class="button">
       <button mat-stroked-button (click)="openRentDialog()" class="color-button">Louer</button>
@@ -29,11 +34,15 @@
 
     <!-- Afficher les avis -->
     <div class="avis" *ngIf="locations.length > 0">
-      <h3 class="avis-title">Avis des locataires :</h3>
+      <h3 class="avis-title">{{ nombreCommentaires }} avi{{ nombreCommentaires > 1 && "s" }} sur le logement · {{ moyenneNote }} ⭐</h3>
       <div *ngFor="let location of locations" class="avis-item">
-        <p class="note">  {{ location.avis[0].note }}/5⭐</p>
-        <p>- {{ location.avis[0].commentaire }}</p>
-        <p>{{location.mailLoueur}}</p>
+        <app-star-rating [rating]="location.avis[0].note"></app-star-rating>
+        <p> {{ location.avis[0].commentaire }}</p>
+        <div class="infoAvis">
+          <i>Du {{ formatDate(location.dateDebut) }} au {{ formatDate(location.dateFin) }} </i>
+          <i> {{ location.mailLoueur }}</i>
+        </div>
+        <hr class="hrView">
       </div>
     </div>
   </div>

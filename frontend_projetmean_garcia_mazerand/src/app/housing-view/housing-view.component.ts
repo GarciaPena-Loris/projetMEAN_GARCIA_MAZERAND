@@ -1,10 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {LocationService} from "./locationService";
 import {MatDialog} from "@angular/material/dialog";
 import {Bien} from "../model/bien.interface";
 import {Location} from "../model/location.interface";
 import {Router} from "@angular/router";
 import {RentComponent} from "../rent/rent.component";
+import {ImageDialogComponent} from "./image-dialog.component";
 
 export interface Tile {
   url: string;
@@ -19,8 +20,9 @@ export interface Tile {
 })
 export class HousingViewComponent {
   logement: Bien;
-  showDetails: boolean = false;
   locations: Location[] = [];
+  moyenneNote = 0;
+  nombreCommentaires = 0;
 
   constructor(public dialog: MatDialog, private locationService: LocationService, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
@@ -33,9 +35,15 @@ export class HousingViewComponent {
       this.locationService.getLocationsByBienId(this.logement.idBien)
         .subscribe(locations => {
           this.locations = locations;
-          console.log(locations);
+          this.moyenneNote = parseFloat((locations.reduce((acc, location) => acc + location.avis[0].note, 0) / locations.length).toFixed(1));
+          this.nombreCommentaires = locations.length;
         });
     }
+  }
+
+  formatDate(timestamp: number): string {
+    let date = new Date(timestamp);
+    return date.toLocaleDateString('fr-FR');
   }
 
   getTiles(): Tile[] {
@@ -47,6 +55,14 @@ export class HousingViewComponent {
       tiles.push({url: image + '.jpg', cols: 1, rows: 1});
     });
     return tiles;
+  }
+
+  openImageDialog(url: string): void {
+    console.log(url);
+    this.dialog.open(ImageDialogComponent, {
+      data: { url },
+      panelClass: 'image-dialog',
+    });
   }
 
   openRentDialog() {
@@ -62,4 +78,6 @@ export class HousingViewComponent {
       }
     });
   }
+
+  protected readonly Math = Math;
 }
