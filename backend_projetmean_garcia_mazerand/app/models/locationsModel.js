@@ -6,12 +6,12 @@ const avisSchema = new mongoose.Schema({
 });
 
 const locationSchema = new mongoose.Schema({
-    idLocation: 'string',
+    idLocation: 'number',
     idBien: { type: mongoose.Schema.Types.Number, ref: 'biens' }, // référence à idBien de bienModel
     mailLoueur: { type: mongoose.Schema.Types.String, ref: 'utilisateurs' }, // référence à mail d'utilisateurModel
     dateDebut: 'number', // date sous la forme timestamp
     dateFin: 'number', // date sous la forme timestamp
-    avis: [avisSchema]
+    avis: avisSchema
 });
 
 const Location = mongoose.model('locations', locationSchema);

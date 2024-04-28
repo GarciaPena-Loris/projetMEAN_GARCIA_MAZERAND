@@ -30,9 +30,11 @@
 }
 
 .button-container {
-   display: flex;
+  display: flex;
   gap: 2%;
 }
+
+
 
 .h3 {
   width: 90%;

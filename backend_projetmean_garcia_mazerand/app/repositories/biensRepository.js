@@ -13,6 +13,12 @@ class BiensRepository {
         return biens;
     }
 
+    async getBienById(bienId) {
+        const bien = await Bien.findOne({idBien: bienId});
+        console.info('Bien récupéré avec succès: ' + bien);
+        return bien;
+    }
+
     async getLastBienId() {
         const bien = await Bien.find({}).sort({idBien: -1}).limit(1);
         if (bien.length === 0) {

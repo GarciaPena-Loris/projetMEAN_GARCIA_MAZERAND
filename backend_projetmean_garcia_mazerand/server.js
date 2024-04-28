@@ -56,6 +56,10 @@ app.get('/api/biens', (req, res) => {
     biensController.getBiens().then(data => res.json(data));
 });
 
+app.get('/api/biens/:id', (req, res) => {
+    biensController.getBienById(req.params.id).then(data => res.json(data));
+});
+
 app.get('/api/lastBienId', (req, res) => {
     biensController.getLastBienId().then(data => res.json(data));
 });
@@ -136,7 +140,7 @@ app.get('/api/location/:email/locations', (req, res) => {
 
 // Post review to location
 app.post('/api/location/:id/review', (req, res) => {
-    locationsController.addReviewToLocation(req, res).then(data => res.json(data));
+    locationsController.addReviewToLocation(req, res);
 });
 
 // Route pour la page d'accueil

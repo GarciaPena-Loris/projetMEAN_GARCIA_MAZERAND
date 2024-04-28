@@ -69,9 +69,17 @@ class LocationsController {
     }
 
     async addReviewToLocation(req, res) {
-        const locationId = req.params.id;
-        const review = req.body.review;
-        return await locationsService.addReviewToLocation(locationId, review);
+        try {
+            console.info('Controller: addReviewToLocation', req.params.id, req.body.review);
+            const locationId = req.params.id;
+            const review = req.body.review;
+            const updatedLocation = await locationsService.addReviewToLocation(locationId, review);
+            res.status(200).json(updatedLocation);
+        }
+        catch (error) {
+            console.error('Controller: addReviewToLocation: Error::', error.message)
+            res.status(400).json({message: error.message});
+        }
     }
 }
 module.exports = new LocationsController();

@@ -15,7 +15,10 @@
             <mat-form-field appearance="outline" class="mat-form-custom">
               <mat-label>Nombre couchages</mat-label>
               <input matInput placeholder="Nombres couchages"
-                     formControlName="nbCouchagesMin">
+                     formControlName="nbCouchagesMin"
+                     type="number"
+                     min="0"
+                     max="20">
             </mat-form-field>
           </td>
           <td>
@@ -42,21 +45,29 @@
             <mat-form-field appearance="outline" class="mat-form-custom">
               <mat-label>Prix max</mat-label>
               <input matInput placeholder="Prix max"
-                     formControlName="prixMax">
+                     formControlName="prixMax"
+                     min="0"
+                     type="number">
             </mat-form-field>
           </td>
           <td>
             <mat-form-field appearance="outline" class="mat-form-custom">
               <mat-label>Type de logement</mat-label>
-              <input matInput placeholder="Type de logement"
-                     formControlName="typeLogement">
+              <mat-select formControlName="typeLogement">
+                <mat-option value="Maison">Maison</mat-option>
+                <mat-option value="Appartement">Appartement</mat-option>
+                <mat-option value="Studio">Studio</mat-option>
+              </mat-select>
             </mat-form-field>
           </td>
           <td>
             <mat-form-field appearance="outline" class="mat-form-custom">
               <mat-label>Nombre chambres</mat-label>
               <input matInput placeholder="Nombres chambres"
-                     formControlName="nbChambresMin">
+                     formControlName="nbChambresMin"
+                     type="number"
+                     min="0"
+                     max="20">
             </mat-form-field>
           </td>
           <td>
@@ -64,7 +75,8 @@
               <mat-label>Distance centre</mat-label>
               <input matInput placeholder="Distance centre"
                      formControlName="distanceMax"
-                     type="number">
+                     type="number"
+                     min="0">
             </mat-form-field>
           </td>
         </tr>

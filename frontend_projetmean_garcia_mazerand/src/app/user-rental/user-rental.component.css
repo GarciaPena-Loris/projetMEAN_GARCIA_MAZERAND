@@ -1,0 +1,100 @@
+.user-reservations {
+  margin: 2% 20%
+}
+
+.infos {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin: 0 5%;
+  flex-direction: column;
+}
+
+.info {
+  display: flex;
+  font-size: 1.5em;
+  margin-bottom: 2%;
+}
+
+.val {
+  margin: 0 10px;
+}
+
+.card-location {
+  margin-bottom: 2%;
+}
+
+.location {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: start;
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.location-icon {
+  margin-right: 5px;
+}
+
+.contact {
+  margin-top: 10%;
+}
+
+.icon-info {
+  display: flex;
+  align-items: center;
+}
+
+.bien-image {
+  width: 20%;
+  height: 20%;
+  margin-right: 2%;
+}
+
+.bien-image:hover {
+  cursor: pointer;
+}
+
+.card-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1%;
+}
+
+.notation-button {
+  background-color: cadetblue;
+  color: #fff;
+}
+
+.notation-button:hover {
+  background-color: #87cacc;
+}
+
+.update-button {
+  background-color: #e8a167;
+  color: #fff;
+}
+
+.update-button:hover {
+  background-color: #f0b27a;
+}
+
+.card-location-upcoming {
+  background-color: rgba(154, 192, 232, 0.41); /* Light blue for upcoming reservations */
+}
+
+.card-location-current {
+  background-color: rgba(75, 248, 75, 0.79); /* Light green for current reservations */
+}
+
+.card-location-past {
+  background-color: rgba(209, 209, 209, 0.32); /* Light coral for past reservations */
+}

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -11,7 +11,7 @@ import {HeaderComponent} from './header/header.component';
 import {MatButton} from "@angular/material/button";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule, MatOption} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import {HousingComponent} from './housing/housing.component';
 import {MatCardModule} from "@angular/material/card";
@@ -29,9 +29,15 @@ import {AuthCardComponent} from './auth-card/auth-card.component';
 import {HousingViewComponent} from './housing-view/housing-view.component';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {StarRatingComponent} from "./housing-view/star-rating.component";
-import {CommonModule} from "@angular/common";
+import {CommonModule, registerLocaleData} from "@angular/common";
 import {ImageDialogComponent} from "./housing-view/image-dialog.component";
-import { UserRentalComponent } from './user-rental/user-rental.component';
+import {UserRentalComponent} from './user-rental/user-rental.component';
+import fr from '@angular/common/locales/fr';
+import {ReviewDialogComponent} from "./user-rental/review-dialog.component";
+import {MatSelect} from "@angular/material/select";
+
+registerLocaleData(fr);
+
 
 @NgModule({
   declarations: [
@@ -47,7 +53,8 @@ import { UserRentalComponent } from './user-rental/user-rental.component';
     StarRatingComponent,
     ImageDialogComponent,
     HousingViewComponent,
-    UserRentalComponent
+    UserRentalComponent,
+    ReviewDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,14 +80,16 @@ import { UserRentalComponent } from './user-rental/user-rental.component';
     ReactiveFormsModule,
     MatGridList,
     MatGridTile,
-    CommonModule
+    CommonModule,
+    MatSelect,
+    MatOption
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
-    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
-
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+    {provide: LOCALE_ID, useValue: 'fr'}
   ],
   bootstrap: [AppComponent]
 })

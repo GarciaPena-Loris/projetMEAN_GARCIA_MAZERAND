@@ -1,4 +1,4 @@
-// avis.interface.ts
+// .interface.ts
 export interface Avis {
   note: number,
   commentaire: string,

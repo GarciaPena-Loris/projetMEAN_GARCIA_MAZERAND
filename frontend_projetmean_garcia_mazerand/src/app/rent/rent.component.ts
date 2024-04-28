@@ -101,7 +101,7 @@ export class RentComponent implements OnInit {
       const isWithinReservation = selectedDateTimestamp >= reservationStartTimestamp && selectedDateTimestamp <= reservationEndTimestamp;
 
       // La date est réservée si elle est antérieure à la date d'arrivée
-      const isBeforeArrivalDate = selectedDateTimestamp < arrivalDateTimestamp;
+      const isBeforeArrivalDate = selectedDateTimestamp <= arrivalDateTimestamp;
 
       // La date est réservée si elle est postérieure à la prochaine réservation après la date d'arrivée
       const isAfterNextReservation = nextReservation && selectedDateTimestamp > new Date(nextReservation.dateDebut).getTime();
@@ -127,8 +127,12 @@ export class RentComponent implements OnInit {
     const dateDebutTimestamp = dateDebutValue ? new Date(dateDebutValue).getTime() : new Date().getTime();
     const dateFinTimestamp = dateFinValue ? new Date(dateFinValue).getTime() : new Date().getTime();
 
+    console.log("Date de début:", dateDebutTimestamp);
+    console.log("Date de fin:", dateFinTimestamp);
+
     // Créer une nouvelle location
     const location: Location = {
+      idLocation: 0,
       idBien: this.data.idBien,
       mailLoueur: this.authService.currentUserInfo.mail,
       dateDebut: dateDebutTimestamp,

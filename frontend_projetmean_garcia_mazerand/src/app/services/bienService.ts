@@ -6,7 +6,7 @@ import {Bien} from '../model/bien.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class SelectorService {
+export class BienService {
   private apiUrl = 'http://localhost:3080/api';
 
   constructor(private http: HttpClient) {
@@ -15,6 +15,10 @@ export class SelectorService {
   getAllBiens(): Observable<Bien[]> {
     const body = {"criteria": ""}
     return this.http.post<Bien[]>(this.apiUrl + '/biens/search', body);
+  }
+
+  getBienById(id: number): Observable<Bien> {
+    return this.http.get<Bien>(this.apiUrl + '/biens/' + id);
   }
 
   getBienWithCriteria(criteria: any): Observable<Bien[]> {

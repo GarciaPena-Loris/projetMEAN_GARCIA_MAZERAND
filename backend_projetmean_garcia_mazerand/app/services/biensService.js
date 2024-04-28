@@ -14,6 +14,10 @@ class BiensService {
         return await biensRepository.getBiens();
     }
 
+    async getBienById(bienId) {
+        return await biensRepository.getBienById(bienId);
+    }
+
     async getLastBienId() {
         return await biensRepository.getLastBienId();
     }

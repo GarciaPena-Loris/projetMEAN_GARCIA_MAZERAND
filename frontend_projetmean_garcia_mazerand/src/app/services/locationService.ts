@@ -23,4 +23,14 @@ export class LocationService {
   getReservations(bienId: number): Observable<{dateDebut: Date, dateFin: Date}[]> {
     return this.http.get<{dateDebut: Date, dateFin: Date}[]>(`${this.apiUrl}/location/${bienId}/reservations`);
   }
+
+  getUserRentals(userMail: string): Observable<Location[]> {
+    // Remplacez par l'URL appropriée de votre API
+    return this.http.get<Location[]>(`${this.apiUrl}/location/${userMail}/locations`);
+  }
+
+  submitReview(rentalId: number, review: string): Observable<void> {
+    // Remplacez par l'URL appropriée de votre API
+    return this.http.post<void>(`${this.apiUrl}/location/${rentalId}/review`, { review });
+  }
 }

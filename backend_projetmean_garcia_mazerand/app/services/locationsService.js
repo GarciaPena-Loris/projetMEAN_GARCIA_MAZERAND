@@ -48,25 +48,25 @@ class LocationsService {
     // Création fausse location
     async createFakeReservations() {
         const biens = await biensRepository.getBiens();
-        const fakeReservations = {};
+        let nombreReservations = 0;
 
         for (const bien of biens) {
             const numReservations = Math.floor(Math.random() * 10) + 1;
-            fakeReservations[bien.idBien] = [];
 
             for (let i = 0; i < numReservations; i++) {
                 const mailLoueur = mailConfig.mail[Math.floor(Math.random() * mailConfig.mail.length)];
-                const dateDebut = faker.date.past().getTime();
+                const dateDebut = faker.date.between(addDays(new Date(), -365), addDays(new Date(), 60)).getTime(); // Générer une date entre un an avant aujourd'hui et un an après aujourd'hui
                 const dateFin = addDays(dateDebut, Math.floor(Math.random() * 15) + 1).getTime();
                 const note = (Math.floor(Math.random() * 10) + 1) / 2;
                 const commentaire = this.generateFakeComment(bien, note);
 
                 const fakeReservation = {
+                    idLocation: await this.getNextIdLocation(),
                     idBien: bien.idBien,
                     mailLoueur,
                     dateDebut,
                     dateFin,
-                    avis: {
+                    avis: dateDebut > Date.now() ? {} : { // Si la date de début est dans le futur, laisser l'avis vide
                         note,
                         commentaire
                     }
@@ -74,11 +74,16 @@ class LocationsService {
 
                 const createdReservation = await this.createLocation(fakeReservation);
                 console.log('Created fake reservation:', createdReservation);
-                fakeReservations[bien.idBien].push(commentaire);
+                nombreReservations++
             }
         }
 
-        return fakeReservations;
+        return nombreReservations;
+    }
+
+    async getNextIdLocation() {
+        const lastIdLocation = await locationsRepository.getLastIdLocation();
+        return lastIdLocation ? lastIdLocation + 1 : 1;
     }
 
     async showFakeReservations() {
@@ -157,10 +162,10 @@ class LocationsService {
     }
 
     async newLocation(location) {
+        location.dateDebut = new Date(location.dateDebut).setHours(23, 59, 59, 0);
+        console.log(location.dateDebut, Date.now())
+        console.log(location.dateDebut >= Date.now())
         // Vérifier si les dates sont valides
-        console.log(location.dateDebut);
-        console.log(Date.now());
-        console.log(location.dateFin);
         if (location.dateDebut >= Date.now() && location.dateFin > location.dateDebut) {
             // Récupérer toutes les locations pour l'idBien actuel
             const existingLocations = await locationsRepository.getLocationByBienId(location.idBien);
@@ -169,6 +174,7 @@ class LocationsService {
                 throw new Error('Le bien est déjà loué pendant cette période');
             } else {
                 // Si tout est valide, créer la location
+                location.idLocation = await this.getNextIdLocation();
                 return await locationsRepository.createLocation(location);
             }
         } else {

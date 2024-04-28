@@ -1,10 +1,9 @@
 <header class="header-container">
   <div class="app-name" (click)="navigateHomePage()">waterbnb</div>
   <app-search-form></app-search-form>
-  <div class="login">
-    <!-- Nouveau bouton pour accéder à la page des locations de l'utilisateur -->
+  <div class="group-button">
     <button mat-stroked-button class="rentals-button" *ngIf="authService.isAuthenticatedUser" (click)="navigateUserRentalsPage()">
-      Mes locations
+      Mes reservations <mat-icon>home</mat-icon>
     </button>
     <button mat-stroked-button class="login-button" (click)="authService.isAuthenticatedUser ? logout() : login()">
       {{ authService.isAuthenticatedUser ? 'Déconnexion' : 'Login' }} <mat-icon>login</mat-icon>

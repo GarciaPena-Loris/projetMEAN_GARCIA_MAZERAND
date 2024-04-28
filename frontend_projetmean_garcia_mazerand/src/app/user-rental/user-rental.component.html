@@ -1,10 +1,78 @@
-<div *ngFor="let rental of rentals">
-  <h2>{{ rental.propertyName }}</h2>
-  <p>{{ rental.startDate }} - {{ rental.endDate }}</p>
-  <div *ngIf="rental.isPast && !rental.review">
-    <form (submit)="submitReview(rental.id, review.value)">
-      <textarea #review></textarea>
-      <button type="submit">Submit Review</button>
-    </form>
+<div class="user-reservations">
+  <h1>Mon profil</h1>
+  <div class="infos">
+    <div class="info">
+      <mat-icon fontIcon="person"></mat-icon>
+      <p class="val">{{ user?.nom }}</p>
+      <span>{{ user?.prenom }}</span>
+    </div>
+    <div class="info">
+      <mat-icon fontIcon="mail"></mat-icon>
+      <p class="val">{{ user?.mail }}</p>
+    </div>
+    <div class="info">
+      <mat-icon fontIcon="phone"></mat-icon>
+      <p class="val">{{ user?.telephone }}</p>
+    </div>
   </div>
-</div>
+  <hr>
+  <div *ngIf="customLocations.length > 0; else noResa">
+    <h1>Mes reservations</h1>
+    <div class="infos">
+      <div *ngFor="let location of customLocations">
+        <mat-card class="card-location" [ngClass]="{
+          'card-location-upcoming': getReservationStatus(location.dateDebut, location.dateFin) === 'à venir',
+          'card-location-current': getReservationStatus(location.dateDebut, location.dateFin) === 'en cours',
+          'card-location-past': getReservationStatus(location.dateDebut, location.dateFin) === 'passée'
+        }">
+          <mat-card-header>
+            <h2> Reservation du {{ (location.dateDebut | date:'d MMMM y') }}
+              au {{ (location.dateFin | date:'d MMMM y') }} :
+            </h2>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="location">
+              <img [src]="location.bien.imagePrincipale + '.jpg'" (click)="imageClick(location.bien)"
+                   alt="Image du bien"
+                   class="bien-image">
+              <div class="location-info">
+                <h2>{{ capitalizeFirstLetter(location.bien.typeLogement) }} à {{ location.bien.commune }}</h2>
+                <div class="icon-info">
+                  <mat-icon fontIcon="map" class="location-icon"></mat-icon>
+                  <div>{{ location.bien.rue }}</div>
+                </div>
+                <div class="icon-info">
+                  <mat-icon fontIcon="euro" class="location-icon"></mat-icon>
+                  <div>{{ calculateNights(location.dateDebut, location.dateFin) }} nuits à {{ location.bien.prix }}€
+                    pour
+                    un
+                    total de <b
+                      style="color: #5f9ea0">{{ calculatePrice(location.bien.prix, location.dateDebut, location.dateFin) }}
+                      € </b></div>
+                </div>
+                <p class="contact">Contacter le propriétaire : <i>{{ location.bien.mailProprio }}</i></p>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="card-bottom">
+              <i>Réservation {{ getReservationStatus(location.dateDebut, location.dateFin) }}</i>
+              <button mat-stroked-button class="notation-button"
+                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && !location.location.avis[0]"
+                      (click)="submitReview(location.location.idLocation)">Noter la location
+                <mat-icon matSuffix>star_border</mat-icon>
+              </button>
+              <button mat-stroked-button class="update-button"
+                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && location.location.avis[0]"
+                      (click)="editReview(location.location.idLocation, location.location.avis[0])">Modifier avis
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <ng-template #noResa>
+    <h1>Aucune réservations</h1>
+  </ng-template>

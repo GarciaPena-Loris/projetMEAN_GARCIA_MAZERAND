@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {Bien} from "../model/bien.interface";
 import {SearchFormService} from "../services/search-formService";
-import {SelectorService} from "../services/selectorService";
+import {BienService} from "../services/bienService";
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ import {SelectorService} from "../services/selectorService";
 export class SelectorComponent implements OnInit {
   logements: Bien[] = [];
 
-  constructor(private housingService: SelectorService, private searchFormService: SearchFormService) {
+  constructor(private housingService: BienService, private searchFormService: SearchFormService) {
     this.searchFormService.currentSearchForm.subscribe(searchForm => {
       const body = {"criteria": searchForm};
       this.housingService.getBienWithCriteria(body).subscribe((biens: Bien[]) => {

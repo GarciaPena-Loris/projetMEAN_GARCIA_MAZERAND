@@ -19,6 +19,15 @@ class LocationsRepository {
         return location;
     }
 
+    async getLastIdLocation() {
+        const location = await Location.find({}).sort({idLocation: -1}).limit(1);
+        if (location.length === 0) {
+            return 0;
+        }
+        console.info('Dernier id : ' + location[0].idLocation);
+        return location[0].idLocation;
+    }
+
     async createLocation(location) {
         let data = {};
         try {
@@ -82,7 +91,7 @@ class LocationsRepository {
     }
 
     async addReviewToLocation(locationId, review) {
-        return Location.updateOne({_id: locationId}, {$push: {avis: review}});
+        return Location.updateOne({idLocation: locationId}, {avis: review});
     }
 
 }

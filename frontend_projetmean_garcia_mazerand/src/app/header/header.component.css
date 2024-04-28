@@ -17,17 +17,30 @@
   margin-left: 20px;
   cursor: pointer;
 }
-.login{
-  width: 100px;
-  margin-right: 4%;
+
+.group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.login-button  {
-  height: 60px;
+.rentals-button {
+  height: 50px;
+  font-size: 1.2em;
+  background-color: #fff;
+  color: cadetblue;
+  border: 1px solid cadetblue;
+  margin-bottom: 10px;
+}
+
+.login-button {
+  height: 50px;
   font-size: 1.2em;
   background-color: cadetblue;
-  color: #fff;
+  color: #fff !important;
 }
+
 
 .login-button:hover {
   background-color: cadetblue;

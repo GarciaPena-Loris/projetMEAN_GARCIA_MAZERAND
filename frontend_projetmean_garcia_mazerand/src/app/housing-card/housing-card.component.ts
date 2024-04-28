@@ -34,13 +34,12 @@ export class HousingCardComponent {
     const dialogRef = this.dialog.open(RentComponent, {
       width: '800px',
       height: '600px',
-      data: { logementId: this.logement?.idBien }
+      data: this.logement
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // L'utilisateur a cliqué sur le bouton "Louer"
-        // Ajoutez ici le code pour louer le logement
+        this.router.navigate(['/user-rentals']);
       }
     });
   }

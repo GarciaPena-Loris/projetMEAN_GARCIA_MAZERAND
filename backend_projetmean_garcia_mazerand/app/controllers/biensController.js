@@ -7,6 +7,11 @@ class BiensController {
         return await biensService.getBiens();
     }
 
+    async getBienById(bienId) {
+        console.info('Controller: getBienById', bienId);
+        return await biensService.getBienById(bienId);
+    }
+
     async getLastBienId() {
         console.info('Controller: getLastBienId')
         return await biensService.getLastBienId();
