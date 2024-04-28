@@ -1,0 +1,10 @@
+<div *ngFor="let rental of rentals">
+  <h2>{{ rental.propertyName }}</h2>
+  <p>{{ rental.startDate }} - {{ rental.endDate }}</p>
+  <div *ngIf="rental.isPast && !rental.review">
+    <form (submit)="submitReview(rental.id, review.value)">
+      <textarea #review></textarea>
+      <button type="submit">Submit Review</button>
+    </form>
+  </div>
+</div>

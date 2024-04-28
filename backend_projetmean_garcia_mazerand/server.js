@@ -119,6 +119,26 @@ app.get('/api/afficherFausseReservation', (req, res) => {
     locationsController.showFakeReservations().then(data => res.json(data));
 });
 
+// Add location
+app.post('/api/location/new', (req, res) => {
+    locationsController.newLocation(req, res);
+});
+
+// Get date already booked
+app.get('/api/location/:bienId/reservations', (req, res) => {
+    locationsController.getReservationsByBienId(req, res);
+});
+
+// Get locations by user email
+app.get('/api/location/:email/locations', (req, res) => {
+    locationsController.getLocationsByUserEmail(req, res).then(data => res.json(data));
+});
+
+// Post review to location
+app.post('/api/location/:id/review', (req, res) => {
+    locationsController.addReviewToLocation(req, res).then(data => res.json(data));
+});
+
 // Route pour la page d'accueil
 app.get('/', (req, res) => {
     res.send(`<h1>API Works !!!</h1>`)

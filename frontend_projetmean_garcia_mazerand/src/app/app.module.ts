@@ -11,7 +11,7 @@ import {HeaderComponent} from './header/header.component';
 import {MatButton} from "@angular/material/button";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import {HousingComponent} from './housing/housing.component';
 import {MatCardModule} from "@angular/material/card";
@@ -31,6 +31,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {StarRatingComponent} from "./housing-view/star-rating.component";
 import {CommonModule} from "@angular/common";
 import {ImageDialogComponent} from "./housing-view/image-dialog.component";
+import { UserRentalComponent } from './user-rental/user-rental.component';
 
 @NgModule({
   declarations: [
@@ -45,13 +46,15 @@ import {ImageDialogComponent} from "./housing-view/image-dialog.component";
     AuthCardComponent,
     StarRatingComponent,
     ImageDialogComponent,
-    HousingViewComponent
+    HousingViewComponent,
+    UserRentalComponent
   ],
   imports: [
     BrowserModule,
     GoogleMapsModule,
     AppRoutingModule,
     MatFormFieldModule,
+    MatDatepickerModule,
     MatIcon,
     MatInput,
     MatButton,
@@ -75,7 +78,9 @@ import {ImageDialogComponent} from "./housing-view/image-dialog.component";
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
+
   ],
   bootstrap: [AppComponent]
 })

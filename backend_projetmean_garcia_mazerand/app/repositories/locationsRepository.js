@@ -60,7 +60,6 @@ class LocationsRepository {
         });
     }
 
-    // locationsRepository.js
     async getLocationsByStartDate(dateDebut) {
         return Location.find({
             dateFin: {$gte: dateDebut}
@@ -71,6 +70,19 @@ class LocationsRepository {
         return Location.find({
             dateDebut: {$lte: dateFin}
         });
+    }
+
+    async getLocationsByUserEmail(userEmail) {
+        return Location.find({mailLoueur: userEmail});
+    }
+
+    async getReservationsByBienId(bienId) {
+        const locations = await Location.find({idBien: bienId});
+        return locations.map(location => ({dateDebut: location.dateDebut, dateFin: location.dateFin}));
+    }
+
+    async addReviewToLocation(locationId, review) {
+        return Location.updateOne({_id: locationId}, {$push: {avis: review}});
     }
 
 }

@@ -9,8 +9,8 @@ const locationSchema = new mongoose.Schema({
     idLocation: 'string',
     idBien: { type: mongoose.Schema.Types.Number, ref: 'biens' }, // référence à idBien de bienModel
     mailLoueur: { type: mongoose.Schema.Types.String, ref: 'utilisateurs' }, // référence à mail d'utilisateurModel
-    dateDebut: 'number', // date sous la forme AAAAMMJJ
-    dateFin: 'number', // date sous la forme AAAAMMJJ
+    dateDebut: 'number', // date sous la forme timestamp
+    dateFin: 'number', // date sous la forme timestamp
     avis: [avisSchema]
 });
 

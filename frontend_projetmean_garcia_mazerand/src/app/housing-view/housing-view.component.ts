@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LocationService} from "./locationService";
+import {LocationService} from "../services/locationService";
 import {MatDialog} from "@angular/material/dialog";
 import {Bien} from "../model/bien.interface";
 import {Location} from "../model/location.interface";
@@ -36,9 +36,24 @@ export class HousingViewComponent {
         this.locationService.getLocationsByBienId(this.logement.idBien)
           .subscribe(locations => {
             this.locations = locations;
-            this.moyenneNote = parseFloat((locations.reduce((acc, location) => acc + location.avis[0].note, 0) / locations.length).toFixed(1));
-            this.nombreCommentaires = locations.length;
-          });
+            let totalNotes = 0;
+            let totalCommentaires = 0;
+
+            locations.forEach(location => {
+              if (location.avis && location.avis[0] && location.avis[0].note) {
+                totalNotes += location.avis[0].note;
+                totalCommentaires++;
+              }
+            });
+
+            if (totalCommentaires > 0) {
+              this.moyenneNote = parseFloat((totalNotes / totalCommentaires).toFixed(1));
+            } else {
+              this.moyenneNote = 0;
+            }
+
+            this.nombreCommentaires = totalCommentaires;
+          })
       }
     }
   }
@@ -50,12 +65,14 @@ export class HousingViewComponent {
 
   getTiles(): Tile[] {
     const tiles: Tile[] = [];
-    // Première image principale
-    tiles.push({url: this.logement.imagePrincipale + '.jpg', cols: 2, rows: 2});
-    // Les autres images
-    this.logement.images.slice(1).forEach(image => {
-      tiles.push({url: image + '.jpg', cols: 1, rows: 1});
-    });
+    if (this.logement) {
+      // Première image principale
+      tiles.push({url: this.logement.imagePrincipale + '.jpg', cols: 2, rows: 2});
+      // Les autres images
+      this.logement.images.slice(1).forEach(image => {
+        tiles.push({url: image + '.jpg', cols: 1, rows: 1});
+      });
+    }
     return tiles;
   }
 
@@ -69,7 +86,8 @@ export class HousingViewComponent {
   openRentDialog() {
     const dialogRef = this.dialog.open(RentComponent, {
       width: '800px',
-      height: '600px'
+      height: '600px',
+      data: this.logement
     });
 
     dialogRef.afterClosed().subscribe(result => {

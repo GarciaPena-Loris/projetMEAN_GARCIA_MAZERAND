@@ -33,7 +33,8 @@ export class HousingCardComponent {
   openRentDialog() {
     const dialogRef = this.dialog.open(RentComponent, {
       width: '800px',
-      height: '600px'
+      height: '600px',
+      data: { logementId: this.logement?.idBien }
     });
 
     dialogRef.afterClosed().subscribe(result => {

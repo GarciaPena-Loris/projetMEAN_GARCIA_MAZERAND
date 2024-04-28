@@ -36,5 +36,42 @@ class LocationsController {
         console.info('Controller: showFakeReservations');
         return await locationsService.showFakeReservations();
     }
+
+    async getReservationsByBienId(req, res) {
+        try {
+            console.info('Controller: getReservationsByBienId', req.params.bienId);
+            const bienId = req.params.bienId;
+            const reservations = await locationsService.getReservationsByBienId(bienId);
+            res.status(200).json(reservations);
+        }
+        catch (error) {
+            console.error('Controller: getReservationsByBienId: Error::', error.message)
+            res.status(400).json({message: error.message});
+        }
+    }
+
+    async newLocation(req, res) {
+        try {
+            console.info('Controller: newLocation', req.body.location);
+            const location = req.body.location;
+            const createdLocation = await locationsService.newLocation(location);
+            res.status(201).json(createdLocation);
+        } catch (error) {
+            console.error('Controller: newLocation: Error::', error.message)
+            res.status(400).json({message: error.message});
+        }
+    }
+
+    async getLocationsByUserEmail(req, res) {
+        console.info('Controller: getLocationsByUserEmail', req.params.email);
+        const userEmail = req.params.email;
+        return await locationsService.getLocationsByUserEmail(userEmail);
+    }
+
+    async addReviewToLocation(req, res) {
+        const locationId = req.params.id;
+        const review = req.body.review;
+        return await locationsService.addReviewToLocation(locationId, review);
+    }
 }
 module.exports = new LocationsController();

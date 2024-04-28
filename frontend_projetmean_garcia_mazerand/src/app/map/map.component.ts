@@ -46,7 +46,11 @@ export class MapComponent implements OnInit {
     if (event.latLng != null) this.display = (event.latLng.toJSON())
   }
 
-  loadMarker(logement: Bien): google.maps.Marker {
+  loadMarker(logement: Bien): google.maps.Marker | undefined {
+    if (typeof google === 'undefined') {
+      return undefined;
+    }
+
     return new google.maps.Marker({
       position: {
         lat: logement.latitude ?? 0,
@@ -61,7 +65,9 @@ export class MapComponent implements OnInit {
 
   addMarker(logement: Bien): void {
     const marker = this.loadMarker(logement);
-    this.markers.add(marker);
+    if (marker) {
+      this.markers.add(marker);
+    }
   }
 
   openMapInfo(content: string, marker: MapMarker): void {

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {SearchFormService} from "./search-formService";
+import {SearchFormService} from "../services/search-formService";
 
 @Component({
   selector: 'app-search-form',

@@ -1,23 +1,31 @@
 <div *ngIf="authService.isAuthenticatedUser; else userNotConnected">
-  <form style="height: 100%">
+  <form [formGroup]="locationForm" (ngSubmit)="onSubmitLocation()">
     <div class="container-principal">
       <h2>Location de logement</h2>
       <h3 class="h3">Informations sur le logement :</h3>
       <div class="sous-conteneur1">
-        <mat-form-field>
-          <input matInput [matDatepicker]="pickerDepart" placeholder="Date de départ" [(ngModel)]="dateDepart"
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput [matDatepicker]="pickerArrivee" placeholder="Date d'arrivée"
+                 formControlName="dateArrivee"
+                 [min]="minDate"
+                 [matDatepickerFilter]="reservedArrivalDate"
                  name="dateDepart">
-          <mat-datepicker-toggle matSuffix [for]="pickerDepart"></mat-datepicker-toggle>
-          <mat-datepicker #pickerDepart></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput [matDatepicker]="pickerArrivee" placeholder="Date d'arrivée" [(ngModel)]="dateArrivee"
-                 name="dateArrivee">
           <mat-datepicker-toggle matSuffix [for]="pickerArrivee"></mat-datepicker-toggle>
           <mat-datepicker #pickerArrivee></mat-datepicker>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput type="number" placeholder="Nombre de voyageurs" [(ngModel)]="nombreVoyageurs"
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput [matDatepicker]="pickerDepart" placeholder="Date de départ"
+                 formControlName="dateDepart"
+                 [min]="minDate"
+                 [matDatepickerFilter]="reservedDepartureDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerDepart"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDepart></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="always">
+          <input matInput type="number" placeholder="Nombre de voyageurs"
+                 formControlName="nombreVoyageurs"
+                 min="1"
+                 max="{{nombrePersonneMax}}"
                  name="nombreVoyageurs">
         </mat-form-field>
       </div>
@@ -26,33 +34,40 @@
 
       <h3 class="h3">Informations de paiement :</h3>
       <div class="sous-conteneur2">
-        <mat-form-field>
-          <input matInput placeholder="Nom" [(ngModel)]="nom" name="nom">
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput placeholder="Nom sur la carte"
+                 name="nom"
+                 formControlName="nom">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Prénom" [(ngModel)]="prenom" name="prenom">
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput placeholder="Numéro carte"
+                 name="code"
+                 type="text"
+                 formControlName="code">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Code" [(ngModel)]="code" name="code">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput [matDatepicker]="pickerExpiration" placeholder="Date d'expiration" [(ngModel)]="expiration"
-                 name="dateExpiration">
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput [matDatepicker]="pickerExpiration"
+                 [min]="minDate"
+                 placeholder="Date d'expiration"
+                 formControlName="expiration">
           <mat-datepicker-toggle matSuffix [for]="pickerExpiration">
           </mat-datepicker-toggle>
           <mat-datepicker #pickerExpiration></mat-datepicker>
         </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="CVV" [(ngModel)]="cvv" name="CVV">
+        <mat-form-field appearance="outline" class="mat-form-custom" floatLabel="auto">
+          <input matInput placeholder="CVV"
+                 name="CVV"
+                 type="number"
+                 min="100"
+                 max="999"
+                 formControlName="ccv">
         </mat-form-field>
       </div>
 
 
       <div class="button-container">
-        <button mat-raised-button color="primary" (click)="confirmerLocation()">Confirmer</button>
-        <button mat-raised-button color="warn" (click)="annulerLocation()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!locationForm.valid || !locationForm.touched">Confirmer</button>
+        <button mat-raised-button color="warn" type="button" (click)="annulerLocation()">Annuler</button>
       </div>
     </div>
   </form>

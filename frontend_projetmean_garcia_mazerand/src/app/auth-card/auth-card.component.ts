@@ -5,7 +5,7 @@ import {User} from "../model/user.interface";
 import {
   MatSnackBar,
 } from "@angular/material/snack-bar";
-import {SnackBarComponent} from "./SnackBarComponent";
+import {SnackBarComponent} from "./snackBar.component";
 import {Router} from "@angular/router";
 
 @Component({
@@ -33,7 +33,6 @@ export class AuthCardComponent {
 
   constructor(private router: Router, public authService: AuthService, private fb: FormBuilder, private _snackBar: MatSnackBar) {
   }
-
 
   login() {
     if (this.loginForm.invalid) {

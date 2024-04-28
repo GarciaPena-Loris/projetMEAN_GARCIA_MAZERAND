@@ -34,15 +34,18 @@
 
     <!-- Afficher les avis -->
     <div class="avis" *ngIf="locations.length > 0">
-      <h3 class="avis-title">{{ nombreCommentaires }} avi{{ nombreCommentaires > 1 && "s" }} sur le logement · {{ moyenneNote }} ⭐</h3>
+      <h3 class="avis-title">{{ nombreCommentaires }} avi{{ nombreCommentaires > 1 && "s" }} sur le logement
+        · {{ moyenneNote }} ⭐</h3>
       <div *ngFor="let location of locations" class="avis-item">
-        <app-star-rating [rating]="location.avis[0].note"></app-star-rating>
-        <p> {{ location.avis[0].commentaire }}</p>
-        <div class="infoAvis">
-          <i>Du {{ formatDate(location.dateDebut) }} au {{ formatDate(location.dateFin) }} </i>
-          <i> {{ location.mailLoueur }}</i>
+        <div *ngIf="location.avis[0]">
+          <app-star-rating [rating]="location.avis[0].note"></app-star-rating>
+          <p> {{ location.avis[0].commentaire }}</p>
+          <div class="infoAvis">
+            <i>Du {{ formatDate(location.dateDebut) }} au {{ formatDate(location.dateFin) }} </i>
+            <i> {{ location.mailLoueur }}</i>
+          </div>
+          <hr class="hrView">
         </div>
-        <hr class="hrView">
       </div>
     </div>
   </div>

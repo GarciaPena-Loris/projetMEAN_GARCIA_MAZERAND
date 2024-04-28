@@ -1,8 +1,6 @@
-import {Component, Injectable, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, SimpleChanges, ViewChild} from '@angular/core';
 import {Bien} from '../model/bien.interface';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {SelectorService} from "../selector/selector.service";
-import {Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root',

@@ -151,6 +151,38 @@ class LocationsService {
             return 'good';
         }
     }
+
+    async getReservationsByBienId(bienId) {
+        return await locationsRepository.getReservationsByBienId(bienId);
+    }
+
+    async newLocation(location) {
+        // Vérifier si les dates sont valides
+        console.log(location.dateDebut);
+        console.log(Date.now());
+        console.log(location.dateFin);
+        if (location.dateDebut >= Date.now() && location.dateFin > location.dateDebut) {
+            // Récupérer toutes les locations pour l'idBien actuel
+            const existingLocations = await locationsRepository.getLocationByBienId(location.idBien);
+            // Vérifier si aucune de ces locations ne se chevauche avec les dates fournies
+            if (existingLocations.some(existingLocation => existingLocation.dateFin > location.dateDebut && existingLocation.dateDebut < location.dateFin)) {
+                throw new Error('Le bien est déjà loué pendant cette période');
+            } else {
+                // Si tout est valide, créer la location
+                return await locationsRepository.createLocation(location);
+            }
+        } else {
+            throw new Error('Les dates ne sont pas valides');
+        }
+    }
+
+    async getLocationsByUserEmail(userEmail) {
+        return await locationsRepository.getLocationsByUserEmail(userEmail);
+    }
+
+    async addReviewToLocation(locationId, review) {
+        return await locationsRepository.addReviewToLocation(locationId, review);
+    }
 }
 
 module.exports = new LocationsService();

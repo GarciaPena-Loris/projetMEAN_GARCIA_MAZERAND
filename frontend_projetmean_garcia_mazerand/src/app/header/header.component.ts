@@ -18,6 +18,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([''])
   }
 
+  navigateUserRentalsPage() {
+    this.router.navigate(['/user-rentals']);
+  }
+
   login() {
     // Redirection vers la page après la connexion
     this.router.navigate(['/auth']);
