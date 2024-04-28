@@ -4,18 +4,20 @@
   top: 0;
   justify-content: space-around;
   align-items: center;
-  /*position: fixed;*/
   z-index: 1000;
   padding: 0 20px;
   border-bottom: 1px solid #e0e0e0;
 }
 
+.logo-name {
+  display: flex;
+  align-items: center;
+}
+
 .app-name {
   font-size: 3em;
   font-weight: bold;
-  color: rgb(154, 192, 232)
-;
-  margin-left: 20px;
+  color: rgb(154, 192, 232);
   cursor: pointer;
 }
 
@@ -30,25 +32,26 @@
   height: 50px;
   font-size: 1.2em;
   background-color: #fff;
-  color: rgb(154, 192, 232)
-;
-  border: 1px solid rgb(154, 192, 232)
-;
+  color: rgb(154, 192, 232);
+  border: 1px solid rgb(154, 192, 232);
   margin-bottom: 10px;
 }
 
 .login-button {
   height: 50px;
   font-size: 1.2em;
-  background-color: rgb(154, 192, 232)
-;
+  background-color: rgb(154, 192, 232);
   color: #fff !important;
 }
 
 
 .login-button:hover {
-  background-color: rgb(154, 192, 232)
-;
+  background-color: rgb(154, 192, 232);
   color: #fff;
 }
 
+.logo {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}

@@ -29,7 +29,7 @@ import {AuthCardComponent} from './auth-card/auth-card.component';
 import {HousingViewComponent} from './housing-view/housing-view.component';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {StarRatingComponent} from "./housing-view/star-rating.component";
-import {CommonModule, registerLocaleData} from "@angular/common";
+import {CommonModule, NgOptimizedImage, registerLocaleData} from "@angular/common";
 import {ImageDialogComponent} from "./housing-view/image-dialog.component";
 import {UserRentalComponent} from './user-rental/user-rental.component';
 import fr from '@angular/common/locales/fr';
@@ -56,34 +56,35 @@ registerLocaleData(fr);
     UserRentalComponent,
     ReviewDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    GoogleMapsModule,
-    AppRoutingModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatIcon,
-    MatInput,
-    MatButton,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    HttpClientModule,
-    MatCardModule,
-    FlexLayoutModule,
-    FlexLayoutServerModule,
-    MatPaginatorModule,
-    FormsModule,
-    HttpClientModule,
-    MatTabGroup,
-    MatTab,
-    MatTabContent,
-    ReactiveFormsModule,
-    MatGridList,
-    MatGridTile,
-    CommonModule,
-    MatSelect,
-    MatOption
-  ],
+    imports: [
+        BrowserModule,
+        GoogleMapsModule,
+        AppRoutingModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatIcon,
+        MatInput,
+        MatButton,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        HttpClientModule,
+        MatCardModule,
+        FlexLayoutModule,
+        FlexLayoutServerModule,
+        MatPaginatorModule,
+        FormsModule,
+        HttpClientModule,
+        MatTabGroup,
+        MatTab,
+        MatTabContent,
+        ReactiveFormsModule,
+        MatGridList,
+        MatGridTile,
+        CommonModule,
+        MatSelect,
+        MatOption,
+        NgOptimizedImage
+    ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
