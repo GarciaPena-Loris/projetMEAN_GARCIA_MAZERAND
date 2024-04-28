@@ -33,10 +33,12 @@ td {
   padding-right: 8px;
 }
 .search-button:hover {
-  background-color: cadetblue;
+  background-color: rgb(154, 192, 232)
+;
   color: #fff;
 }
 
 .mat-form-field.mat-focused .mat-form-field-outline-thick {
-  color: cadetblue; /* Remplacez #000000 par la couleur de votre choix */
+  color: rgb(154, 192, 232)
+; /* Remplacez #000000 par la couleur de votre choix */
 }
