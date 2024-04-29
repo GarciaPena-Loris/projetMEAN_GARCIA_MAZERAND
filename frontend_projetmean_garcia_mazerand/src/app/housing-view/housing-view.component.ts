@@ -36,6 +36,7 @@ export class HousingViewComponent {
         this.locationService.getLocationsByBienId(this.logement.idBien)
           .subscribe(locations => {
             this.locations = locations;
+            console.log(locations)
             let totalNotes = 0;
             let totalCommentaires = 0;
 

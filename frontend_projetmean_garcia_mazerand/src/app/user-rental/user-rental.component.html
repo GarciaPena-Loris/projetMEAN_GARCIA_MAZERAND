@@ -58,12 +58,12 @@
             <div class="card-bottom">
               <i>Réservation {{ getReservationStatus(location.dateDebut, location.dateFin) }}</i>
               <button mat-stroked-button class="notation-button"
-                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && !location.location.avis[0]"
+                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && (location.location.avis && !location.location.avis[0])"
                       (click)="submitReview(location.location.idLocation)">Noter la location
                 <mat-icon matSuffix>star_border</mat-icon>
               </button>
               <button mat-stroked-button class="update-button"
-                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && location.location.avis[0]"
+                      *ngIf="getReservationStatus(location.dateDebut, location.dateFin) === 'passée' && (location.location.avis && location.location.avis[0])"
                       (click)="editReview(location.location.idLocation, location.location.avis[0])">Modifier avis
                 <mat-icon matSuffix>mode_edit</mat-icon>
               </button>

@@ -93,7 +93,7 @@
 }
 
 .card-location-current {
-  background-color: rgba(75, 248, 75, 0.79); /* Light green for current reservations */
+  background-color: rgba(154, 228, 113, 0.62); /* Light green for current reservations */
 }
 
 .card-location-past {

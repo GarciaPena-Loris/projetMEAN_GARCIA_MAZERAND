@@ -37,7 +37,7 @@
       <h3 class="avis-title">{{ nombreCommentaires }} avi{{ nombreCommentaires > 1 ? "s" : "" }} sur le logement
         · {{ moyenneNote }} ⭐</h3>
       <div *ngFor="let location of locations" class="avis-item">
-        <div *ngIf="location.avis[0]">
+        <div *ngIf="location.avis && location.avis[0]">
           <app-star-rating [rating]="location.avis[0].note"></app-star-rating>
           <p> {{ location.avis[0].commentaire }}</p>
           <div class="infoAvis">

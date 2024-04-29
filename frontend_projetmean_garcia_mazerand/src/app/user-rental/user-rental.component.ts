@@ -48,6 +48,7 @@ export class UserRentalComponent implements OnInit {
 
         forkJoin(requests).subscribe((customLocations: CustomLocation[]) => {
           this.customLocations = customLocations;
+          console.log(this.customLocations);
 
           // Trier les réservations
           this.customLocations.sort((a, b) => {
