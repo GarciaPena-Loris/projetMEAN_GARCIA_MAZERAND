@@ -65,8 +65,24 @@
       </div>
 
 
+      <div class="resume" *ngIf="locationForm.valid && locationForm.touched">
+        <hr class="hr">
+
+        <h3> Confirmer la location de ce logement pour les dates
+          du {{ locationForm.value.dateArrivee | date: 'dd MMMM yyyy' }}
+          au {{ locationForm.value.dateDepart | date: 'dd MMMM yyyy' }} pour {{ locationForm.value.nombreVoyageurs }}
+          voyageurs.
+        </h3>
+        <h3> Location d'une durée de <b>{{ calculateNights() }} nuit{{ calculateNights() > 1 ? "s" : "" }}</b>, pour un
+          total de <b class="price">{{ calculatePrice() }}€ </b>.
+        </h3>
+      </div>
+
+
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!locationForm.valid || !locationForm.touched">Confirmer</button>
+        <button mat-raised-button class="confirmer-button" type="submit"
+                [disabled]="!locationForm.valid || !locationForm.touched">Confirmer
+        </button>
         <button mat-raised-button color="warn" type="button" (click)="annulerLocation()">Annuler</button>
       </div>
     </div>

@@ -76,13 +76,13 @@ export class UserRentalComponent implements OnInit {
   calculateNights(dateDebut: Date, dateFin: Date): number {
     const oneDay = 24 * 60 * 60 * 1000; // heures*minutes*secondes*millisecondes
     const diffDays = Math.round(Math.abs((dateDebut.getTime() - dateFin.getTime()) / oneDay));
-    return diffDays + 1; // Ajoutez 1 ici
+    return diffDays + 1;
   }
 
   calculatePrice(pricePerNight: number, dateDebut: Date, dateFin: Date): string {
     const oneDay = 24 * 60 * 60 * 1000; // heures*minutes*secondes*millisecondes
     const diffDays = Math.round(Math.abs((dateDebut.getTime() - dateFin.getTime()) / oneDay));
-    return parseFloat(String((diffDays + 1) * pricePerNight)).toFixed(2); // Ajoutez 1 ici aussi
+    return parseFloat(String((diffDays + 1) * pricePerNight)).toFixed(2);
   }
 
   getReservationStatus(dateDebut: Date, dateFin: Date): string {
