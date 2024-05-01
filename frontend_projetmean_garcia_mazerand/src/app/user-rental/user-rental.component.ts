@@ -1,6 +1,6 @@
 // user-rentals.component.ts
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../auth-card/auth.service";
+import {AuthService} from "../services/auth.service";
 import {User} from "../model/user.interface";
 import {Location} from "../model/location.interface";
 import {LocationService} from "../services/locationService";
